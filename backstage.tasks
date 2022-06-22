@@ -11,12 +11,11 @@ buildver check
 python -m unittest discover -f -s tests -t .
 
 [release]
-# Build then release a new version of the project to PyPI.
+# Build then release a new version of the project.
 # Note: you can extend this command in the CLI to set the next version.
 # Example: backstage release then 3.0.0
 # Example: backstage release then +maj
-buildver build
-twine upload --skip-existing dist/*
+rustic release
 
 [gitinit]
 # Initialize a new Git repository then create a new connection to the remote repository.
