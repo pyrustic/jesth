@@ -56,7 +56,7 @@ This is the second time you've come across an empty title section in this Jesth 
 ```
 
 # API
-Three functions are exposed by the **Jesth** library:
+These functions are exposed by the **Jesth** library:
 - **parse:** This function takes as input a string and returns the `Jesth structure`. The Jesth structure is a dictionary. A key is a section title and the value is a list of strings that make up the body of the section. Each string represents a line. The order of the keys is the same as in the original Jesth.
 - **render:** This function takes as input a `Jesth structure`. The Jesth structure is then rendered, i.e. a text is output.
 - **read:** This function takes as input a filename then returns the output of the **parse** function.
