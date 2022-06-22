@@ -1,0 +1,35 @@
+[init]
+# Initialize the Python project.
+setupinit init
+
+[check]
+# Get the project version and latest build information.
+buildver check
+
+[test]
+# Run tests.
+python -m unittest discover -f -s tests -t .
+
+[release]
+# Build then release a new version of the project to PyPI.
+# Note: you can extend this command in the CLI to set the next version.
+# Example: backstage release then 3.0.0
+# Example: backstage release then +maj
+buildver build
+twine upload --skip-existing dist/*
+
+[gitinit]
+# Initialize a new Git repository then create a new connection to the remote repository.
+# Note: the user is prompted to submit the 'origin'.
+git init
+python -c 'import subrun; subrun.run("git remote add origin {}".format(input("Origin: ")))'
+
+[gitcommit]
+# Save your changes to the local repository.
+# Note: the user is prompted to submit a commit message.
+git add .
+python -c 'import subrun; subrun.run("git commit -m \"{}\"".format(input("Commit message: ")))'
+
+[gitpush]
+# Send the commits from your local Git repository to the remote repository
+git push origin master
