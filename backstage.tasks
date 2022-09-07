@@ -1,34 +1,106 @@
 [init]
 # Initialize the Python project.
-setupinit init
+$ setupinit init
+
 
 [check]
 # Get the project version and latest build information.
-buildver check
+$ buildver check
+
 
 [test]
 # Run tests.
-python -m unittest discover -f -s tests -t .
+$ python -m unittest discover -f -s tests -t .
+
 
 [release]
 # Build then release a new version of the project.
 # Note: you can extend this command in the CLI to set the next version.
 # Example: backstage release then 3.0.0
 # Example: backstage release then +maj
-rustic release
+interface with buildver
+set project_dir = {CWD}
+call buildver.get_version(project_dir)
+set project_version = {R}
+if project_version == EMPTY
+    : Failed to get the project version.
+    : Release cancelled.
+    return
+: Project version: {project_version}
+& _build_doc
+& _git_default_commit
+& _git_tag {project_version}
+& _build_package {ARGS}
+& _git_push {project_version}
+& _git_default_commit
+& _pypi_release
+: Done !
+
 
 [gitinit]
 # Initialize a new Git repository then create a new connection to the remote repository.
 # Note: the user is prompted to submit the 'origin'.
-git init
-python -c 'import subrun; subrun.run("git remote add origin {}".format(input("Origin: ")))'
+$ git init
+> origin : `Origin: `
+$ git remote add origin {origin}
+
 
 [gitcommit]
 # Save your changes to the local repository.
 # Note: the user is prompted to submit a commit message.
-git add .
-python -c 'import subrun; subrun.run("git commit -m \"{}\"".format(input("Commit message: ")))'
+$ git add .
+> msg : `Commit message: `
+$ git commit -m {msg}
+
 
 [gitpush]
 # Send the commits from your local Git repository to the remote repository
-git push origin master
+$ git push origin master
+
+
+[_build_doc]
+:
+: === Documentation generation===
+:
+$ hyperdoc build
+
+
+[_git_default_commit]
+:
+: === Commit changes === 
+:
+$ git add .
+$ git commit -m "Update"
+
+
+[_git_tag]
+set project_version = {ARGS[0]}
+:
+: === Tagging=== 
+:
+$ git tag {project_version}
+:
+
+
+[_build_package]
+: === Build distribution package ===
+:
+$ buildver build {ARGS}
+:
+
+
+[_git_push]
+set project_version = {ARGS[0]}
+: === Git push ===
+:
+$ git push origin master tag {project_version}
+
+
+[_pypi_release]
+:
+: === PyPI release === 
+:
+$ twine upload --skip-existing dist/*
+:
+
+

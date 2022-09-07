@@ -81,6 +81,8 @@ class Parser:
         else:
             if self._body is None:
                 self._body = list()
+            if line.startswith(r"\["):
+                line = line.replace(r"\[", "[", 1)
             self._body.append(line)
 
     def get_structure(self):

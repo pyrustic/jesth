@@ -55,6 +55,11 @@ def _render(structure):
         if header:
             header = "[{}]".format(header)
             text.append(header)
+        if isinstance(body, str):
+            body = body.split("\n")
+        for i, line in enumerate(body):
+            if line.startswith("["):
+                body[i] = "\\" + line
         if not isinstance(body, str):
             body = "\n".join(body)
         text.append(body)
