@@ -44,6 +44,7 @@ item_2: 2
 Hey, stop thinking about TOML or INI file, only two things matter here:
 - a section title
 - a section body
+\[escaped_bracket]
 
 [section_1]
 No exception will be raised. This is not a duplicate section.
