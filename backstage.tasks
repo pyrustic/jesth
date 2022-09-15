@@ -1,23 +1,173 @@
-[init]
-# Initialize the Python project.
-$ setupinit init
+2022-09-15 (Alex Rustic)
+This 'backstage.tasks' file is written for Python projects.
+Put this file in the root directory of your Python project.
+
+You will need to install 'backstage', 'setupinit', and 'buildver':
+    $ pip install backstage
+    $ pip install setupinit
+    $ pip install buildver
+
+Once installed, run:
+    $ cd /path/to/project
+    $ backstage --help
+
+Visit https://github.com/pyrustic/backstage
+
+
+------------------------------------------------------------------
+
+
+[build]
+$ buildver build {ARGS}
+
+
+[build.doc]
+Build the Python project
+
+Usage:
+    backstage build
+    backstage build then <next_version>
+
+Example:
+    backstage build then 3.0.0
+    backstage build then +maj
+
+Under the hood, the package 'buildver' is used.
+
+
+------------------------------------------------------------------
 
 
 [check]
-# Get the project version and latest build information.
 $ buildver check
 
 
-[test]
-# Run tests.
-$ python -m unittest discover -f -s tests -t .
+[check.doc]
+Get the project version and latest build information
+
+Usage:
+    backstage check
+
+Under the hood, the package 'buildver' is used.
+
+
+------------------------------------------------------------------
+
+
+[clean]
+pass
+
+
+[clean.doc]
+Clean the project directory
+
+Usage:
+    backstage clean
+
+
+------------------------------------------------------------------
+
+
+[gendoc]
+$ hyperdoc build
+
+
+[gendoc.doc]
+Generate the project documentation
+
+Usage:
+    backstage gendoc
+
+
+------------------------------------------------------------------
+
+
+[gitcommit]
+default message
+set message = {ARGS[0]}
+if message == EMPTY
+    set message = `Update`
+$ git add .
+$ git commit -m {message}
+
+
+[gitcommit.doc]
+Save your changes to the local repository
+
+Usage:
+    backstage gitcommit
+    backstage gitcommit <message>
+
+Note: by default, the message is set to "Update".
+
+Under the hood, the program Git is used.
+
+
+------------------------------------------------------------------
+
+
+[gitinit]
+default origin
+set origin = {ARGS[0]}
+if origin == EMPTY
+    > origin : `Origin: `
+$ git init
+$ git remote add origin {origin}
+
+
+[gitinit.doc]
+Initialize a new Git repository then create a new connection
+to the remote repository
+
+Usage:
+    backstage gitinit
+
+Under the hood, the program Git is used.
+
+
+------------------------------------------------------------------
+
+
+[gitpush]
+default project_version
+set project_version = {ARGS[0]}
+if project_version == EMPTY
+    $ git push origin master
+else
+    $ git push origin master tag {project_version}
+return R
+
+
+[gitpush.doc]
+Send the commits from your local Git repository to the remote repository
+
+Usage:
+    backstage gitpush
+    backstage gitpush <version_tag>
+
+Under the hood, the program Git is used.
+
+
+------------------------------------------------------------------
+
+
+[init]
+$ setupinit init
+
+
+[init.doc]
+Initialize the Python project
+
+Usage:
+    backstage init
+
+Under the hood, the package 'setupinit' is used.
+
+
+------------------------------------------------------------------
 
 
 [release]
-# Build then release a new version of the project.
-# Note: you can extend this command in the CLI to set the next version.
-# Example: backstage release then 3.0.0
-# Example: backstage release then +maj
 interface with buildver
 set project_dir = {CWD}
 call buildver.get_version(project_dir)
@@ -27,80 +177,115 @@ if project_version == EMPTY
     : Release cancelled.
     return
 : Project version: {project_version}
-& _build_doc
-& _git_default_commit
-& _git_tag {project_version}
-& _build_package {ARGS}
-& _git_push {project_version}
-& _git_default_commit
-& _pypi_release
-: Done !
-
-
-[gitinit]
-# Initialize a new Git repository then create a new connection to the remote repository.
-# Note: the user is prompted to submit the 'origin'.
-$ git init
-> origin : `Origin: `
-$ git remote add origin {origin}
-
-
-[gitcommit]
-# Save your changes to the local repository.
-# Note: the user is prompted to submit a commit message.
-$ git add .
-> msg : `Commit message: `
-$ git commit -m {msg}
-
-
-[gitpush]
-# Send the commits from your local Git repository to the remote repository
-$ git push origin master
-
-
-[_build_doc]
 :
-: === Documentation generation===
+: == Documentation generation ==
 :
-$ hyperdoc build
-
-
-[_git_default_commit]
+& gendoc
 :
-: === Commit changes === 
+: == Commit changes ==
 :
-$ git add .
-$ git commit -m "Update"
-
-
-[_git_tag]
-set project_version = {ARGS[0]}
+& gitcommit
 :
-: === Tagging=== 
+: == Git tag ==
 :
 $ git tag {project_version}
 :
-
-
-[_build_package]
-: === Build distribution package ===
+: == Build distribution package ==
 :
-$ buildver build {ARGS}
+& build {ARGS}
 :
+: == Commit changes ==
+:
+& gitcommit
+:
+: == Git push ==
+:
+& _looped_task gitpush {project_version}
+:
+: == Upload package to PyPI ==
+:
+& _looped_task upload2pypi
+:
+: Goodbye !
 
 
-[_git_push]
-set project_version = {ARGS[0]}
-: === Git push ===
-:
-$ git push origin master tag {project_version}
+[release.doc]
+Release a new version of this project
+
+Usage:
+    backstage release
+    backstage release then <next_version>
+
+Example:
+    backstage release then 3.0.1
+    backstage release then +maj
+
+Under the hood, 'Git', 'buildver' and 'twine' are used.
 
 
-[_pypi_release]
-:
-: === PyPI release === 
-:
+------------------------------------------------------------------
+
+
+[test]
+$ python -m unittest discover -f -s tests -t .
+
+
+[test.doc]
+Run tests
+
+Usage:
+    backstage test
+
+Under the hood, the module 'unittest' is used.
+
+
+------------------------------------------------------------------
+
+
+[upload2pypi]
 $ twine upload --skip-existing dist/*
-:
+return R
 
 
+[upload2pypi.doc]
+Upload the recently built distribution package to PyPI
+
+Usage:
+    backstage upload2pypi
+
+Under the hood, the package 'twine' is used.
+
+
+------------------------------------------------------------------
+
+
+[_looped_task]
+# take a task as argument
+# and ensure it exits with success
+# (if the user is ok with it)
+set success = {FALSE}
+while success == FALSE
+    & {ARGS}
+    if R == 0
+        set success = {TRUE}
+    else
+        set success = {FALSE}
+    if success == FALSE
+        & _ask_confirmation "Repeat the failed subtask (y/N): "
+        if R == 0
+            break
+
+
+------------------------------------------------------------------
+
+
+[_ask_confirmation]
+# ask for confirmation
+# returns 1 if True, else 0
+default message
+set message = {ARGS[0]}
+> result : {message}
+set yes = `y`
+if result == yes
+    return 1
+return 0
