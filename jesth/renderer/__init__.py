@@ -26,7 +26,7 @@ def render(structure):
 
 def write(structure, destination):
     """
-    Convert a Jesth structure into plain text then save it in a file
+    Convert a Jesth structure into plain text then save it in a file (the parent directory should exist)
 
     [parameters]
     - structure: dict, Jesth structure. Each key represents a section title.
@@ -43,7 +43,7 @@ def write(structure, destination):
     """
     data = render(structure)
     if isinstance(destination, pathlib.Path):
-        destination = destination.resolve()
+        destination = str(destination.resolve())
     with open(destination, "w") as file:
         file.write(data)
     return data

@@ -21,18 +21,8 @@ Visit https://github.com/pyrustic/backstage
 $ buildver build {ARGS}
 
 
-[build.doc]
-Build the Python project
-
-Usage:
-    backstage build
-    backstage build then <next_version>
-
-Example:
-    backstage build then 3.0.0
-    backstage build then +maj
-
-Under the hood, the package 'buildver' is used.
+[build.test]
+assert 1 == 1
 
 
 ------------------------------------------------------------------
@@ -42,13 +32,8 @@ Under the hood, the package 'buildver' is used.
 $ buildver check
 
 
-[check.doc]
-Get the project version and latest build information
-
-Usage:
-    backstage check
-
-Under the hood, the package 'buildver' is used.
+[check.test]
+assert 1 == 1
 
 
 ------------------------------------------------------------------
@@ -58,11 +43,8 @@ Under the hood, the package 'buildver' is used.
 pass
 
 
-[clean.doc]
-Clean the project directory
-
-Usage:
-    backstage clean
+[clean.test]
+assert 1 == 1
 
 
 ------------------------------------------------------------------
@@ -72,11 +54,8 @@ Usage:
 $ hyperdoc build
 
 
-[gendoc.doc]
-Generate the project documentation
-
-Usage:
-    backstage gendoc
+[gendoc.test]
+assert 1 == 1
 
 
 ------------------------------------------------------------------
@@ -91,16 +70,8 @@ $ git add .
 $ git commit -m {message}
 
 
-[gitcommit.doc]
-Save your changes to the local repository
-
-Usage:
-    backstage gitcommit
-    backstage gitcommit <message>
-
-Note: by default, the message is set to "Update".
-
-Under the hood, the program Git is used.
+[gitcommit.test]
+assert 1 == 1
 
 
 ------------------------------------------------------------------
@@ -115,14 +86,8 @@ $ git init
 $ git remote add origin {origin}
 
 
-[gitinit.doc]
-Initialize a new Git repository then create a new connection
-to the remote repository
-
-Usage:
-    backstage gitinit
-
-Under the hood, the program Git is used.
+[gitinit.test]
+assert 1 == 1
 
 
 ------------------------------------------------------------------
@@ -138,14 +103,8 @@ else
 return R
 
 
-[gitpush.doc]
-Send the commits from your local Git repository to the remote repository
-
-Usage:
-    backstage gitpush
-    backstage gitpush <version_tag>
-
-Under the hood, the program Git is used.
+[gitpush.test]
+assert 1 == 1
 
 
 ------------------------------------------------------------------
@@ -155,13 +114,8 @@ Under the hood, the program Git is used.
 $ setupinit init
 
 
-[init.doc]
-Initialize the Python project
-
-Usage:
-    backstage init
-
-Under the hood, the package 'setupinit' is used.
+[init.test]
+assert 1 == 1
 
 
 ------------------------------------------------------------------
@@ -209,18 +163,8 @@ $ git tag {project_version}
 : Goodbye !
 
 
-[release.doc]
-Release a new version of this project
-
-Usage:
-    backstage release
-    backstage release then <next_version>
-
-Example:
-    backstage release then 3.0.1
-    backstage release then +maj
-
-Under the hood, 'Git', 'buildver' and 'twine' are used.
+[release.test]
+assert 1 == 1
 
 
 ------------------------------------------------------------------
@@ -230,13 +174,8 @@ Under the hood, 'Git', 'buildver' and 'twine' are used.
 $ python -m unittest discover -f -s tests -t .
 
 
-[test.doc]
-Run tests
-
-Usage:
-    backstage test
-
-Under the hood, the module 'unittest' is used.
+[test.test]
+assert 1 == 1
 
 
 ------------------------------------------------------------------
@@ -247,13 +186,8 @@ $ twine upload --skip-existing dist/*
 return R
 
 
-[upload2pypi.doc]
-Upload the recently built distribution package to PyPI
-
-Usage:
-    backstage upload2pypi
-
-Under the hood, the package 'twine' is used.
+[upload2pypi.test]
+assert 1 == 1
 
 
 ------------------------------------------------------------------
@@ -271,7 +205,9 @@ while success == FALSE
     else
         set success = {FALSE}
     if success == FALSE
+        :
         & _ask_confirmation "Repeat the failed subtask (y/N): "
+        :
         if R == 0
             break
 
@@ -289,3 +225,146 @@ set yes = `y`
 if result == yes
     return 1
 return 0
+
+
+------------------------------------------------------------------
+
+
+[build.help]
+Build the Python project
+
+Usage:
+    backstage build
+    backstage build then <next_version>
+
+Example:
+    backstage build then 3.0.0
+    backstage build then +maj
+
+Under the hood, the package 'buildver' is used.
+
+
+------------------------------------------------------------------
+
+
+[check.help]
+Get the project version and latest build information
+
+Usage:
+    backstage check
+
+Under the hood, the package 'buildver' is used.
+
+
+------------------------------------------------------------------
+
+
+[clean.help]
+Clean the project directory
+
+Usage:
+    backstage clean
+
+
+------------------------------------------------------------------
+
+
+[gendoc.help]
+Generate the project documentation
+
+Usage:
+    backstage gendoc
+
+
+------------------------------------------------------------------
+
+
+[gitcommit.help]
+Save your changes to the local repository
+
+Usage:
+    backstage gitcommit
+    backstage gitcommit <message>
+
+Note: by default, the message is set to "Update".
+
+Under the hood, the program Git is used.
+
+
+------------------------------------------------------------------
+
+
+[gitinit.help]
+Initialize a new Git repository then create a new connection
+to the remote repository
+
+Usage:
+    backstage gitinit
+
+Under the hood, the program Git is used.
+
+
+------------------------------------------------------------------
+
+
+[gitpush.help]
+Send the commits from your local Git repository to the remote repository
+
+Usage:
+    backstage gitpush
+    backstage gitpush <version_tag>
+
+Under the hood, the program Git is used.
+
+
+------------------------------------------------------------------
+
+
+[init.help]
+Initialize the Python project
+
+Usage:
+    backstage init
+
+Under the hood, the package 'setupinit' is used.
+
+
+------------------------------------------------------------------
+
+
+[release.help]
+Release a new version of this project
+
+Usage:
+    backstage release
+    backstage release then <next_version>
+
+Example:
+    backstage release then 3.0.1
+    backstage release then +maj
+
+Under the hood, 'Git', 'buildver' and 'twine' are used.
+
+
+------------------------------------------------------------------
+
+
+[test.help]
+Run tests
+
+Usage:
+    backstage test
+
+Under the hood, the module 'unittest' is used.
+
+
+------------------------------------------------------------------
+
+
+[upload2pypi.help]
+Upload the recently built distribution package to PyPI
+
+Usage:
+    backstage upload2pypi
+
+Under the hood, the package 'twine' is used.

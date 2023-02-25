@@ -20,7 +20,7 @@ def read(source, compact=False, split_body=True):
     The body is a list of string, each string represents a line of text without the newline at end.
     """
     if isinstance(source, pathlib.Path):
-        source = source.resolve()
+        source = str(source.resolve())
     if not os.path.isfile(source):
         return OrderedDict()
     parser = Parser(compact=compact, split_body=split_body)

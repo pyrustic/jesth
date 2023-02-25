@@ -120,7 +120,7 @@ Convert a Jesth structure into plain text
 
 
 ## write
-Convert a Jesth structure into plain text then save it in a file
+Convert a Jesth structure into plain text then save it in a file (the parent directory should exist)
 
 
 
