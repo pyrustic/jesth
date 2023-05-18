@@ -1,6 +1,6 @@
 <!-- Cover -->
 <div align="center">
-    <img src="https://raw.githubusercontent.com/pyrustic/misc/master/assets/jesth/cover.png" alt="Demo" width="1380">
+    <img src="https://raw.githubusercontent.com/pyrustic/misc/master/assets/jesth/cover.png" alt="Demo" width="1000">
     <p align="center">
     Jesthfile with 1 top anonymous section, and 2 'user' sections
     </p>
