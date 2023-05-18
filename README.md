@@ -18,11 +18,11 @@ This project is part of the [Pyrustic Open Ecosystem](https://pyrustic.github.io
 ## Table of contents
 
 - [Overview](#overview)
-- [Why not TOML, YAML, or JSON ?](#why-not-toml-yaml-or-json )
+- [Why not TOML, YAML, or JSON ?](#why-not-toml-yaml-or-json-)
 - [Why use Jesth ?](#why-use-jesth-)
 - [Demo](#demo)
 - [Code snippets for everyday scenarios](#code-snippets-for-everyday-scenarios)
-- [Anatomy of a Section](#anatomy-of-a-Section)
+- [Anatomy of a Section](#anatomy-of-a-section)
     - [Base section](#base-section)
     - [Dict section](#dict-section)
     - [Section family](#section-family)
