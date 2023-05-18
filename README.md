@@ -33,7 +33,7 @@ This project is part of the [Pyrustic Open Ecosystem](https://pyrustic.github.io
     - [Multi-line strings](#multi-line-strings)
     - [Date and time](#date-and-time)
     - [Embedded binary data](#embedded-binary-data)
-    - [Comments and whitespace](#comments-and-whitespace)
+    - [Comments and whitespaces](#comments-and-whitespaces)
     - [Collections (nested dict and list)](#collections-nested-dict-and-list)
 - [Application programming interface](#application-programming-interface)
 - [Jesth Schema for data validation](#jesth-schema-for-data-validation)
