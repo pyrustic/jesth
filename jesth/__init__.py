@@ -1,7 +1,12 @@
-"""This module exposes the API of this library"""
-from jesth.parser import read, parse
+"""For convenience, this module exposes main classes and functions of the library"""
+from jesth.document import Document
+from jesth.section import Section
+from jesth.parser import read, parse, Parser
 from jesth.renderer import render, write
-from jesth.util import get_key_value
+from jesth.converter import make_dict, flatten_dict, ValueConverter
+from jesth.misc import split_key_value
 
 
-__all__ = ["parse", "render", "read", "write", "get_key_value"]
+__all__ = ["Document", "Section", "parse", "render", "read", "write",
+           "make_dict", "flatten_dict", "ValueConverter", "split_key_value",
+           "Parser"]

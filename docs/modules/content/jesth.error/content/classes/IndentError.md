@@ -6,14 +6,14 @@ Back to [All Modules](https://github.com/pyrustic/jesth/blob/master/docs/modules
  
 Errors classes
 
-> **Classes:** &nbsp; [Error](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.error/content/classes/Error.md#class-error) &nbsp;&nbsp; [StructureError](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.error/content/classes/StructureError.md#class-structureerror)
+> **Classes:** &nbsp; [ConversionError](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.error/content/classes/ConversionError.md#class-conversionerror) &nbsp;&nbsp; [Error](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.error/content/classes/Error.md#class-error) &nbsp;&nbsp; [IndentError](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.error/content/classes/IndentError.md#class-indenterror)
 >
 > **Functions:** &nbsp; None
 >
 > **Constants:** &nbsp; None
 
-# Class StructureError
-Common base class for all non-exit exceptions.
+# Class IndentError
+Indent error while parsing a section body
 
 ## Base Classes
 jesth.error.Error

@@ -4,10 +4,10 @@ Back to [All Modules](https://github.com/pyrustic/jesth/blob/master/docs/modules
 
 **jesth**
  
-This module exposes the API of this library
+For convenience, this module exposes main classes and functions of the library
 
-> **Classes:** &nbsp; None
+> **Classes:** &nbsp; [Document](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Document.md#class-document) &nbsp;&nbsp; [Parser](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Parser.md#class-parser) &nbsp;&nbsp; [Section](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Section.md#class-section) &nbsp;&nbsp; [ValueConverter](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/ValueConverter.md#class-valueconverter)
 >
-> **Functions:** &nbsp; [get\_key\_value](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#get_key_value) &nbsp;&nbsp; [parse](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#parse) &nbsp;&nbsp; [read](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#read) &nbsp;&nbsp; [render](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#render) &nbsp;&nbsp; [write](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#write)
+> **Functions:** &nbsp; [flatten\_dict](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#flatten_dict) &nbsp;&nbsp; [make\_dict](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#make_dict) &nbsp;&nbsp; [parse](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#parse) &nbsp;&nbsp; [read](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#read) &nbsp;&nbsp; [render](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#render) &nbsp;&nbsp; [split\_key\_value](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#split_key_value) &nbsp;&nbsp; [write](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#write)
 >
 > **Constants:** &nbsp; None
