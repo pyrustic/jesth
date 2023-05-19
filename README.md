@@ -697,6 +697,7 @@ The beautiful cover image is made with the amazing [carbon app](https://carbon.n
 # Contributing
 Feel free to open an issue to report a bug, suggest some changes, show some useful code snippets, or discuss anything related to this project. You can also directly email [me](https://pyrustic.github.io/#contact).
 
+> **Note:** I would like to automate a decent Git workflow (branching, merging patches, all the basic cool things cool kids do) with [Backstage](https://github.com/pyrustic/backstage). In the meantime, I will manually incorporate the fixes into the only existing branch (`master`). Thank you for your understanding !
 
 ## Setup your development environment
 Following are instructions to setup your development environment
