@@ -63,7 +63,7 @@ In the next few sections, we'll dive deep into Jesth, but first, why not [TOML](
 # Why not TOML, YAML, or JSON ?
 Jesth offers a high level of **versatility** that allows the programmer to freely decide what a section can contain and how to interpret its contents. 
 
-Moreover, whenever the programmer decides to adopt a dictionary as a data structure to formalize some or all sections of a Jesth document, he/she is offered a [very readable and strict syntax](#specs_of_the_dict_section) to encode the data. 
+Moreover, whenever the programmer decides to adopt a dictionary as a data structure to formalize some or all sections of a Jesth document, he/she is offered a [very readable and strict syntax](#specs-of-the-dict-section) to encode the data. 
 
 The library exposes an intuitive API for loading and dumping Dict sections with an option to preserve comments and whitespaces.
 
@@ -249,7 +249,7 @@ sections = document.get_all("user")
 # Specs of the Dict Section
 The specs for a Dictionary Section are mostly aligned with Python specs. For example, a Jesth Integer follows exactly the definition of Python Integer. 
 
-> **Note:** The Jesth library allows the customization of each type of data as well in the context of parsing or in the context of rendering. This customization is made via the [ValueConverter](#the_valueconverter_object) object
+> **Note:** The Jesth library allows the customization of each type of data as well in the context of parsing or in the context of rendering. This customization is made via the [ValueConverter](#the-valueconverter-object) object
 
 ## Scalars
 Jesth supports integers (base 10, hexadecimal, octal, binary), float (approximate binary floating-point, fixed-precision decimal floating-point), complex numbers, and booleans.
