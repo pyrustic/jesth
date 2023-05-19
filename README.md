@@ -54,7 +54,7 @@ Instead of interpreting these lines upstream after extracting the sections, the 
 Because of this parsing policy, a single Jesth document can contain an **eclectic set of sections** representing a poem, server configs, help text, [prompts](https://github.com/f/awesome-chatgpt-prompts) for a chatbot, [directed graph](https://en.wikipedia.org/wiki/Directed_graph), [ascii artwork](https://en.wikipedia.org/wiki/ASCII_art), and more.
 
 ## Shipped with a proper and extensively tested hack
-For convenience, the Jesth library includes a proper and extensively tested hack to convert a compatible section into a [dictionary](https://en.wikipedia.org/wiki/Associative_array) data structure. In such a section that allows comments, one can encode strings (single or multi-line), scalars (integer, float, decimal float, complex, booleans), date and time, null value, binary data and nested collections (list and dictionary).
+For convenience, the Jesth library includes a proper and extensively tested hack to convert a compatible section into a [dictionary](https://en.wikipedia.org/wiki/Associative_array) data structure. In such a section that allows comments, one can encode **strings** (single or multi-line), **scalars** (integer, float, decimal float, complex, booleans), **date** and **time**, **null** value, **binary** data and nested **collections** (list and dictionary).
 
 Therefore, Jesth can be used for configuration files, to create a [scripting language](https://github.com/pyrustic/backstage), to act as a markup language to write [docstrings](https://en.wikipedia.org/wiki/Docstring#Python) so that a tool can generate reference documentation after parsing them, etc.
 
