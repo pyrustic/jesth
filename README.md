@@ -44,7 +44,7 @@ This project is part of the [Pyrustic Open Ecosystem](https://pyrustic.github.io
     
 
 # Overview
-**Jesth** (pronounced [/dʒest/](https://dictionary.cambridge.org/pronunciation/english/jest)), which stands for **Just Extract Sections Then [Hack](https://en.wikipedia.org/wiki/Hacker_culture)**, is a human-readable data serialization format whose reference parser is an eponymous lightweight [Python](https://www.python.org/) library available on [PyPI](#installation).
+**Jesth** (pronounced [/dʒest/](https://dictionary.cambridge.org/pronunciation/english/jest)), which stands for **Just Extract Sections Then Hack'em**, is a human-readable data serialization format whose reference parser is an eponymous lightweight [Python](https://www.python.org/) library available on [PyPI](#installation).
 
 > Read the **backstory** in this [HN discussion](https://news.ycombinator.com/item?id=35991018) !
 
@@ -56,7 +56,7 @@ Instead of interpreting these lines upstream after extracting the sections, the 
 Because of this parsing policy, a single Jesth document can contain an **eclectic set of sections** representing a poem, server configs, help text, [prompts](https://github.com/f/awesome-chatgpt-prompts) for a chatbot, [directed graph](https://en.wikipedia.org/wiki/Directed_graph), [ascii artwork](https://en.wikipedia.org/wiki/ASCII_art), and more.
 
 ## Shipped with a proper and extensively tested hack
-For convenience, the Jesth library includes a proper and extensively tested hack to convert a compatible section into a [dictionary](https://en.wikipedia.org/wiki/Associative_array) data structure. In such a section that allows comments, one can encode **strings** (single or multi-line), **scalars** (integer, float, decimal float, complex, booleans), **date** and **time**, **null** value, **binary** data and nested **collections** (list and dictionary).
+For convenience, the Jesth library includes a proper and extensively tested [hack]((https://en.wikipedia.org/wiki/Hacker_culture)) to convert a compatible section into a [dictionary](https://en.wikipedia.org/wiki/Associative_array) data structure. In such a section that allows comments, one can encode **strings** (single or multi-line), **scalars** (integer, float, decimal float, complex, booleans), **date** and **time**, **null** value, **binary** data and nested **collections** (list and dictionary).
 
 Therefore, Jesth can be used for configuration files, to create a [scripting language](https://github.com/pyrustic/backstage), to act as a markup language to write [docstrings](https://en.wikipedia.org/wiki/Docstring#Python) so that a tool can generate reference documentation after parsing them, etc.
 
