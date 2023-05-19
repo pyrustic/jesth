@@ -672,7 +672,7 @@ If you are interested into writing a Jesth library for another language (Rust, C
 Collection of miscellaneous notes.
 
 ## Acronymy
-Jesth stands for Just Extract Sections Then Hack.
+Jesth stands for **Just Extract Sections Then Hack'em**. Here, the word `hack` is a direct reference to the [Hacker culture](https://en.wikipedia.org/wiki/Hacker_culture).
 
 ## End of document
 To tell the parser to stop parsing a document, input in the document the `[[END]]` (case-insensitive) tag on its own line.
