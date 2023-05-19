@@ -44,7 +44,7 @@ This project is part of the [Pyrustic Open Ecosystem](https://pyrustic.github.io
     
 
 # Overview
-**Jesth**, which stands for **Just Extract Sections Then Hack**, and pronounced [/dʒest/](https://dictionary.cambridge.org/pronunciation/english/jest) is a human-readable data serialization format whose reference parser is an eponymous lightweight Python library available on [PyPI](#installation).
+**Jesth** (pronounced [/dʒest/](https://dictionary.cambridge.org/pronunciation/english/jest)), which stands for **Just Extract Sections Then Hack**, is a human-readable data serialization format whose reference parser is an eponymous lightweight Python library available on [PyPI](#installation).
 
 ## Versatile serialization format
 A Jesth **document** is made up of **sections**, each defined by a **header** (between two square brackets) and a **body** which is just lines of text. 
