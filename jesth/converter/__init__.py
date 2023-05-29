@@ -8,7 +8,7 @@ from jesth.box import HexInt, OctInt, BinInt, RawString,\
     Text, RawText, CommentID, Comment, WhitespaceID, Whitespace
 
 
-def make_dict(body, value_converter=None, strict=True):
+def create_dict(body, value_converter=None, strict=True):
     """
     Convert a section body into a Python dict
 
@@ -18,7 +18,7 @@ def make_dict(body, value_converter=None, strict=True):
     - strict: when strict is True, comments and whitespaces aren't preserved
 
     [return]
-    Returns a Python dict (OrderedDict by default, customizable with ValueConverter)
+    Returns a Python dict (type customizable with ValueConverter)
 
     [exceptions]
     - jesth.error.ConversionError: raised when an error occured while doing conversion
@@ -35,7 +35,7 @@ def flatten_dict(data, value_converter=None):
     Convert a Python dict into a list of strings (section body in the base form)
 
     [parameters]
-    - data: Python dict (I do recommend an OrderedDict)
+    - data: Python dict
     - value_converter: instance of ValueConverter to customize value encoding
 
     [return]
@@ -50,7 +50,6 @@ class BaseToDict:
     def run(lines, value_converter=None, strict=True):
         value_converter = value_converter if value_converter else ValueConverter()
         stack = list()
-        #root_container = OrderedDict()
         root_container = value_converter.dict_type()
         root_context = Context("dict", root_container, 0)
         stack.append(root_context)
@@ -64,7 +63,7 @@ class BaseToDict:
                 pass
             # lower indent
             elif indents < context.indents:
-                BaseToDict._cleanup_stack(stack, value_converter, indents)
+                BaseToDict._cleanup_stack(stack, value_converter, indents, strict)
             # exaggerated forward indent
             else:
                 msg = "Expected {} or less indents at line '{}'"
@@ -81,7 +80,7 @@ class BaseToDict:
                 msg = msg.format(lineno+1, type(e).__name__, str_e)
                 raise type(e)(msg)
         # cleanup stack
-        BaseToDict._cleanup_stack(stack, value_converter, 0)
+        BaseToDict._cleanup_stack(stack, value_converter, 0, strict)
         # end
         #return BaseToDict._finalize_root_dict(root_context, value_converter)
         return root_container
@@ -180,7 +179,7 @@ class BaseToDict:
         stack.append(new_context)
 
     @staticmethod
-    def _cleanup_stack(stack, value_converter, indents):
+    def _cleanup_stack(stack, value_converter, indents, strict):
         if not stack:
             return
         while True:
@@ -193,7 +192,7 @@ class BaseToDict:
             # bin
             if context.name == "bin":
                 BaseToDict._finalize_bin(parent_context, context,
-                                         value_converter)
+                                         value_converter, strict)
             # dict
             #elif context.name == "dict":
             #    BaseToDict._finalize_dict(parent_context, context,
@@ -205,11 +204,11 @@ class BaseToDict:
             # raw
             elif context.name == "raw":
                 BaseToDict._finalize_raw(parent_context, context,
-                                         value_converter)
+                                         value_converter, strict)
             # text
             elif context.name == "text":
                 BaseToDict._finalize_text(parent_context, context,
-                                          value_converter)
+                                          value_converter, strict)
             # delete the latest context
             del stack[-1]
 
@@ -222,7 +221,7 @@ class BaseToDict:
         return default_dict_type(collection)
 
     @staticmethod
-    def _finalize_bin(parent_context, context, value_converter):
+    def _finalize_bin(parent_context, context, value_converter, strict):
         bin_block, whitespace_block = BaseToDict._split_block(context.collection)
         value = [item.strip() for item in bin_block if item]
         bin_data = value_converter.bin_decoder(value)
@@ -231,7 +230,7 @@ class BaseToDict:
         #    bin_data = default_bin_type(bin_data)
         BaseToDict._update_parent_context(parent_context, bin_data)
         for line in whitespace_block:
-            BaseToDict._add_whitespace_to_parent_context(parent_context, line)
+            BaseToDict._add_whitespace_to_parent_context(parent_context, line, strict)
     """
     @staticmethod
     def _finalize_dict(parent_context, context, value_converter):
@@ -253,7 +252,7 @@ class BaseToDict:
     """
 
     @staticmethod
-    def _finalize_raw(parent_context, context, value_converter):
+    def _finalize_raw(parent_context, context, value_converter, strict):
         # concatenate text lines
         raw_block, whitespace_block = BaseToDict._split_block(context.collection)
         text = value_converter.raw_decoder(raw_block)
@@ -263,7 +262,7 @@ class BaseToDict:
         #    text = default_raw_type(text)
         BaseToDict._update_parent_context(parent_context, text)
         for line in whitespace_block:
-            BaseToDict._add_whitespace_to_parent_context(parent_context, line)
+            BaseToDict._add_whitespace_to_parent_context(parent_context, line, strict)
         return
         #default_raw_type = value_converter.raw_type
         #box = context.box
@@ -273,7 +272,7 @@ class BaseToDict:
         #BaseToDict._update_parent_context(parent_context, box)
 
     @staticmethod
-    def _finalize_text(parent_context, context, value_converter):
+    def _finalize_text(parent_context, context, value_converter, strict):
         # concatenate text lines
         text_block, whitespace_block = BaseToDict._split_block(context.collection)
         text = value_converter.text_decoder(text_block)
@@ -282,7 +281,7 @@ class BaseToDict:
         #    text = default_text_type(text)
         BaseToDict._update_parent_context(parent_context, text)
         for line in whitespace_block:
-            BaseToDict._add_whitespace_to_parent_context(parent_context, line)
+            BaseToDict._add_whitespace_to_parent_context(parent_context, line, strict)
 
     @staticmethod
     def _split_block(block):
@@ -309,7 +308,9 @@ class BaseToDict:
             raise error.Error(msg)
 
     @staticmethod
-    def _add_whitespace_to_parent_context(parent_context, data):
+    def _add_whitespace_to_parent_context(parent_context, data, strict):
+        if strict:
+            return
         whitespace = Whitespace(data)
         if parent_context.name == "dict":
             whitespace_id = WhitespaceID()
@@ -535,7 +536,7 @@ class ValueConverter:
 
         - list_type: the Python type in which a Jesth List should be converted into. Defaults to Python list type.
 
-        - XXX_types: this represents a group of parameters. Here, XXX is a placeholder for a Jesth data type. Valid types are: dict, list, bin, bool, complex, date, datetime, float, integer, raw, string, text, time. Examples: dict_types, float_types, and time_types. Use this parameter to set a list of Python types that may be encoded in the Jesth type (the same used as prefix). Example: dict_types defaults to [OrderedDict, dict], i.e., while encoding some Python data, an OrderedDict instance or a regular dict instance will be encoded as a Jesth dict.
+        - XXX_types: this represents a group of parameters. Here, XXX is a placeholder for a Jesth data type. Valid types are: dict, list, bin, bool, complex, date, datetime, float, integer, raw, string, text, time. Examples: dict_types, float_types, and time_types. Use this parameter to set a list of Python types that may be encoded in the Jesth type (the same used as prefix). Example: dict_types defaults to [dict, OrderedDict], i.e., while encoding some Python data, an OrderedDict instance or a regular dict instance will be encoded as a Jesth dict.
 
         - XXX_encoder: this represents a group of parameters. Here, XXX is a placeholder for one of: bin, bool, complex, date, datetime, float, integer, null, raw, string, text, time, fallback. Use these parameters to set a callable to encode Python values into Jesth values. Example: float_encoder = decimal.Decimal
 
@@ -543,11 +544,11 @@ class ValueConverter:
         """
 
         # default types for dict and list containers
-        self._dict_type = dict_type if dict_type else OrderedDict
+        self._dict_type = dict_type if dict_type else dict
         self._list_type = list_type if list_type else list
 
         # types for containers
-        self._dict_types = dict_types if dict_types else [OrderedDict, dict]
+        self._dict_types = dict_types if dict_types else [dict, OrderedDict]
         self._list_types = list_types if list_types else [list, tuple, set]
 
         # data types

@@ -2,7 +2,7 @@
 <div align="center">
     <img src="https://raw.githubusercontent.com/pyrustic/misc/master/assets/jesth/cover.png" alt="Demo" width="650">
     <p align="center">
-    Jesthfile with 1 top anonymous section, and 2 'user' sections
+    JesthFile with 1 anonymous top section, and 2 'user' sections
     </p>
 </div>
 
@@ -56,7 +56,7 @@ Instead of interpreting these lines upstream after extracting the sections, the 
 Because of this parsing policy, a single Jesth document can contain an **eclectic set of sections** representing a poem, server configs, help text, [prompts](https://github.com/f/awesome-chatgpt-prompts) for a chatbot, [directed graph](https://en.wikipedia.org/wiki/Directed_graph), [ascii artwork](https://en.wikipedia.org/wiki/ASCII_art), and more.
 
 ## Shipped with a proper and extensively tested hack
-For convenience, the Jesth library includes a proper and extensively tested [hack]((https://en.wikipedia.org/wiki/Hacker_culture)) to convert a compatible section into a [dictionary](https://en.wikipedia.org/wiki/Associative_array) data structure. In such a section that allows comments, one can encode **strings** (single or multi-line), **scalars** (integer, float, decimal float, complex, booleans), **date** and **time**, **null** value, **binary** data and nested **collections** (list and dictionary).
+For convenience, the Jesth library includes a proper and extensively tested [hack]((https://en.wikipedia.org/wiki/Hacker_culture)) to convert a compatible section to a [dictionary](https://en.wikipedia.org/wiki/Associative_array) data structure. In such a section that allows comments, one can encode **strings** (single or multi-line), **scalars** (integer, float, decimal float, complex, booleans), **date** and **time**, **null** value, **binary** data and nested **collections** (list and dictionary).
 
 Therefore, Jesth can be used for configuration files, to create a [scripting language](https://github.com/pyrustic/backstage), to act as a markup language to write [docstrings](https://en.wikipedia.org/wiki/Docstring#Python) so that a tool can generate reference documentation after parsing them, etc.
 
@@ -87,15 +87,15 @@ Jesth is ideal for configuration files, whether intended for use by a standard a
 
 Loading a Jesth document is stress-free because exceptions are only thrown when you try to convert a non-compatible section to a dictionary. But even that is the strict default behavior of the dictionary converter since you can customize the converter to string invalid values. This specific customization is as simple as this: `value_converter.fallback_decoder = str`
 
-There's more to say, for example the syntax for encoding a dictionary into a JesthFile is text editor/IDE-friendly, so it may benefit from supporting some cool features like the folding mechanism.
+There's more to say, for example the Jesth Dict Section syntax is text editor/IDE-friendly, so it may benefit from supporting some cool features like the folding mechanism.
 
 # Demo
-The demo is a clonable repository containing a Jesthfile and a Python script to load its contents. 
+The demo is a clonable repository containing a JesthFile and a Python script to load its contents. 
 
 > [Open the Demo](https://github.com/pyrustic/jesth-demo#readme) !
 
 # Code snippets for everyday scenarios
-**Load a Jesthfile:**
+**Load a JesthFile:**
 ```python
 from jesth import read
 
@@ -116,6 +116,9 @@ user_sections = document.get_all("user")
 # show the body of a section
 print(config_section.body)  # list of lines
 
+# show the body as a text (concatenated lines)
+print(config_section.to_text())
+
 # update the body of a section
 new_body = [r"# comment", 
             r"server1 = '1.1.1.1'",
@@ -124,20 +127,21 @@ config_section.update(new_body)
 ```
 
 **Convert a compatible section into a Python Dict:**
+
 ```python
 ...
 
-# will raise an exception if the section can't be converted into dict
-dict_object = section.make_dict()
+# won't raise an exception if the section can't be converted to dict
+dict_object = section.to_dict()
 
-# won't raise an exception if the section can't be converted into dict
-dict_object = section.get_dict()
+# will raise an exception if the section can't be converted to dict
+dict_object = section.create_dict()
 
-# Note that `.make_dict` accepts `default` and `strict` arguments
+# Note that `.create_dict` accepts `default` and `strict` arguments
 # If the body can be converted to a dict but is empty, you get `default`
 # Set True to `strict` to preserve comments and whitespaces
 
-# Note that `.get_dict` accepts `default`, `strict`, and `fallback`
+# Note that `.to_dict` accepts `default`, `strict`, and `fallback`
 # If the body can't be converted to a dict, you get `fallback`
 ```
 
@@ -161,7 +165,7 @@ document.insert(0, "user", body)  # body as a list of lines
 from jesth import write
 ...
 
-# if the document is linked to a Jesthfile, call its `save` method
+# if the document is linked to a JesthFile, call its `save` method
 document.save()
 
 # or save to a new path
@@ -177,7 +181,7 @@ from jesth import render
 ...
 
 # return the string representation of the data
-# this jesth text can be stored as it in a Jesthfile
+# this jesth text can be stored as it in a JesthFile
 jesth_text = document.render()
 
 # Under the hood, the Document class actually uses the `render` function
@@ -228,17 +232,17 @@ The alternative representation of such body is just a concatenated version of th
 ## Dict section
 Is called Dict section, a section that is intended to be converted into a dictionary object by the parser. 
 
-By default, the library uses the `OrderedDict` class to represent the body of such section, thus, the order of key/value is preserved. This default behavior can be customized through the `ValueConverter` object.
+By default, the library uses the regular `dict` type to represent the body of such section. This default behavior can be customized through the `ValueConverter` object.
 
 ## Section family
-Different sections can have the same header. In this case, they belong to a section family. By default, the `.get(header)` method from the `Document` class returns the last defined section with the given header argument. This method actually accepts an `index` argument which is set to `-1` by default to align with Python convention to access the last item of a sequence.
+Different sections can have the same header. In this case, they belong to a **section family**. By default, the `.get(header)` method from the `Document` class returns the first defined section with the given header argument. This method actually accepts a `sub_index` argument which is set to `0` by default to access the first item of the section family.
 
 **Get the 2nd section in the 'user' section family:**
 
 ```python
 ...
 
-section = document.get("user", index=1)
+section = document.get("user", sub_index=1)
 ```
 
 **Get the list of all sections in the 'user' section family:**
@@ -442,7 +446,7 @@ empty_bin = (bin)
 
 
 ## Comments and whitespaces
-Jesth Dict Section supports comments which are strings starting with `#`. Comments and Whitespaces can be preserved while converting a Jesth Dict Section into a Python Dictionary (OrderedDict to be precise).
+Jesth Dict Section supports comments which are strings starting with `#`. Comments and Whitespaces can be preserved while converting a Jesth Dict Section into a Python Dictionary.
 **Example with comments and whitespaces:**
 ```
 # this is a comment
@@ -483,10 +487,10 @@ my_dict = (dict)
 
 **Mapping with actual Python objects:**
 
-|Jesth|Python|
-|---|---|
-|dict|`collections.OrderedDict`|
-|list|`list`|
+|Jesth| Python |
+|---|--------|
+|dict| `dict` |
+|list| `list` |
 
 # Application programming interface
 The library exposes functions and classes to load and dump Jesth document with optional customization at each stage. Loaded documents and their sections are encapsulated into classes exposing methods and properties with a high emphasis on ergonomy.
@@ -563,6 +567,7 @@ The `read` and `parse` functions returns a document object which contains the li
 The document object exposes `append`, `insert`, `remove`, and `remove_all` methods to add and remove sections.
 
 **Example:**
+
 ```python
 from jesth import read
 
@@ -575,11 +580,13 @@ document.append("header", body=body)  # body may be a dict or string
 
 # insert an empty section at a specific index
 document.insert(0, "header")  # therefore, first section
+# override the first section with a new empty one
+document.set(0, "header")  # 'body' is still set to None here
 
 # remove the last section with a specific header
-document.remove("header")  # index defaults to -1
+document.remove("header")  # sub_index defaults to -1
 # remove the first section with a specific header
-document.remove("header", index=0)
+document.remove("header", sub_index=0)
 # note that the index argument is meant to be relative
 # to this 'section family', i.e., sections with same header.
 
@@ -591,16 +598,17 @@ document.remove_all("header")
 The document object exposes `get`, `get_all`, and `count` methods to retrieve sections or their count.
 
 **Example:**
+
 ```python
 from jesth import read
 
 path = "/path/to/jestfile"
 document = read(path)
 
-# get the last section with a specific header
-section = document.get("header")  # the index arg defaults to -1
 # get the first section with a specific header
-section = document.get("header", index=0) 
+section = document.get("header")  # the index arg defaults to 0
+# get the last section with a specific header
+section = document.get("header", sub_index=-1)
 # note that the index argument is meant to be relative
 # to this 'section family', i.e., sections with same header.
 
@@ -618,6 +626,7 @@ The Section object contains the header and the body of a section. The body is st
 
 
 **Example:**
+
 ```python
 from jesth import read
 
@@ -626,16 +635,19 @@ document = read(path)
 section = document.get("header")
 
 # Convert the body of this section into a dict then return it.
+# Beware, this method won't raise an exception at all
+# instead, it may return a fallback value
+data = section.to_dict()  # accepts "default", "fallback", "strict"
+
+# Concatenate the lines of the body to form a text string
+data = section.to_text()
+
+# Convert the body of this section into a dict then return it.
 # Beware, this method will raise an exception if the conversion fails
-data = section.make_dict()  # accepts "default" and "strict"
+data = section.create_dict()  # accepts "default" and "strict"
 # the default parameter is for default data if the new created dict
 # is empty. The strict parameter is to tell whether comment/whitespace
 # should be preserved and inserted in the new dict !
-
-# Convert the body of this section into a dict then return it.
-# Beware, this method won't raise an exception at all
-# instead, it may return a fallback value
-data = section.get_dict()  # accepts "default", "fallback", "strict"
 
 # update the body of this section
 body = ["line 1", "line 2", "line 3"]
@@ -652,7 +664,7 @@ Most time, you won't need to set or edit this object. The encode and decode meth
 
 - **list_type**: the Python type in which a Jesth List should be converted into. Defaults to Python list type.
 
-- **XXX_types**: this represents a group of parameters. Here, XXX is a placeholder for a Jesth data type. Valid types are: dict, list, bin, bool, complex, date, datetime, float, integer, raw, string, text, time. Examples: dict_types, float_types, and time_types. Use this parameter to set a list of Python types that may be encoded in the Jesth type (the same used as prefix). Example: dict_types defaults to [OrderedDict, dict], i.e., while encoding some Python data, an OrderedDict instance or a regular dict instance will be encoded as a Jesth dict.
+- **XXX_types**: this represents a group of parameters. Here, XXX is a placeholder for a Jesth data type. Valid types are: dict, list, bin, bool, complex, date, datetime, float, integer, raw, string, text, time. Examples: dict_types, float_types, and time_types. Use this parameter to set a list of Python types that may be encoded in the Jesth type (the same used as prefix). Example: dict_types defaults to [dict, OrderedDict], i.e., while encoding some Python data, an OrderedDict instance or a regular dict instance will be encoded as a Jesth dict.
 
 - **XXX_encoder**: this represents a group of parameters. Here, XXX is a placeholder for one of: bin, bool, complex, date, datetime, float, integer, null, raw, string, text, time, fallback. Use these parameters to set a callable to encode Python values into Jesth values. Example: float_encoder = decimal.Decimal
 

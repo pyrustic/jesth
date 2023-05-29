@@ -42,6 +42,38 @@ class TestSplitValueFunc(unittest.TestCase):
         self.assertEqual(expected, r)
 
 
+class TestCorrectIndexFunc(unittest.TestCase):
+
+    def test_with_positive_index(self):
+        # correct index
+        size = 5
+        for i in range(size):
+            r = misc.correct_index(index=i, size=size)
+            expected = i
+            self.assertEqual(expected, r)
+        # out of bound index
+        r = misc.correct_index(index=7, size=6)
+        expected = 5
+        self.assertEqual(expected, r)
+        # out of bound index + ignore upper bound
+        r = misc.correct_index(index=7, size=6, ignore_upper_bound=True)
+        expected = 7
+        self.assertEqual(expected, r)
+
+    def test_with_negative_index(self):
+        # correct index
+        size = 5
+        expected = 0
+        for i in range(-size, 0):
+            r = misc.correct_index(index=i, size=size)
+            self.assertEqual(expected, r)
+            expected += 1
+        # out of bound index
+        r = misc.correct_index(index=-7, size=6)
+        expected = 0
+        self.assertEqual(expected, r)
+
+
 class TestUpdateCachedRefsFunc(unittest.TestCase):
 
     def test(self):
@@ -256,6 +288,7 @@ class TestParseFloatFunc(unittest.TestCase):
         self.assertEqual(expected_left_mantissa, info.left_mantissa)
         self.assertEqual(expected_right_mantissa, info.right_mantissa)
         self.assertEqual(expected_exponent, info.exponent)
+
 
 
 if __name__ == "__main__":

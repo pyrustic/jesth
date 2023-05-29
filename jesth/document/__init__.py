@@ -1,6 +1,5 @@
 """Document class for creating model for Jesth data or to interacting with a Jesthfile"""
 import pathlib
-from collections import OrderedDict
 from jesth import misc
 from jesth.section import Section
 from jesth.renderer import write, render
@@ -102,7 +101,8 @@ class Document:
         - header: the header (string) of the new section
         - body: the body of this section as a string or a list of strings
         """
-        self._insert(len(self._sections), header, body)
+        n = len(self._sections)
+        self._insert(n, header, body)
 
     def insert(self, index, header, body=None):
         """
@@ -113,10 +113,32 @@ class Document:
         - header: the header (string) of the new section
         - body: the body of this section as a string or a list of strings
         """
-        index = len(self._sections) if index == -1 else index
+        n = len(self._sections)
+        index = misc.correct_index(index, n,
+                                   ignore_upper_bound=True) if n else 0
         self._insert(index, header, body)
 
-    def get(self, header, index=-1):
+    def set(self, index, header, body=None):
+        """
+        Set a section at a specific index of the document
+
+        [parameters]
+        - index: the index integer
+        - header: the header string of the section
+        - body: the body of the section, may be a list of string, a dictionary,
+          or a text string
+        """
+        n = len(self._sections)
+        index = misc.correct_index(index, n) if n else 0
+        # find section at same index then remove it
+        cache = self._find_section_to_remove(index)
+        if cache:
+            h, i = cache
+            self.remove(header=h, sub_index=i)
+        # insert new section
+        self._insert(index, header, body)
+
+    def get(self, header, sub_index=0):
         """
         Get X named section object located at Y index relatively to others sections with same header
 
@@ -124,15 +146,23 @@ class Document:
         - header: the header (string) of the section
         - index: integer index, relatively to the section
         family (sections sharing this same header).
-        Defaults to -1, thus will be returned, the last section with this header relatively
+        Defaults to 0, thus will be returned, the first section with this header relatively
         to this header family.
 
         [return]
         Returns a section or None
         """
-        if header not in self._model:
+        try:
+            n = len(self._model[header])
+        except KeyError:
             return None
-        return self._model[header][index]
+        sub_index = misc.correct_index(sub_index, n) if n else 0
+        section = None
+        try:
+            section = self._model[header][sub_index]
+        except IndexError:
+            pass
+        return section
 
     def get_all(self, header):
         """
@@ -161,7 +191,7 @@ class Document:
             return 0
         return len(self._model[header])
 
-    def remove(self, header, index=-1):
+    def remove(self, header, sub_index=-1):
         """
         Remove a section from this document
 
@@ -172,18 +202,26 @@ class Document:
         Defaults to -1, thus the last section of the given header family will be removed
         from the document
         """
-        if header not in self._model:
+        try:
+            n = len(self._model[header])
+        except KeyError:
             return
-        if self._model[header]:
-            del self._model[header][index]
-        else:
+        sub_index = misc.correct_index(sub_index, n)
+        if n == 0:
             del self._model[header]
-        index = len(self._sections) if index == -1 else index
-        i = len(self._sections) - 1
-        for _ in reversed(self._sections):
-            if i == index:
-                del self._sections[i]
-                break
+        else:
+            try:
+                del self._model[header][sub_index]
+            except IndexError:
+                pass
+        i1 = i2 = 0
+        for section in self._sections:
+            if section.header == header:
+                if i2 == sub_index:
+                    del self._sections[i1]
+                    break
+                i2 += 1
+            i1 += 1
 
     def remove_all(self, header):
         """
@@ -205,7 +243,7 @@ class Document:
         self._create_model()
 
     def _create_model(self):
-        self._model = OrderedDict()
+        self._model = dict()
         for section in self._sections:
             header = section.header
             if header not in self._model:
@@ -215,14 +253,26 @@ class Document:
     def _insert(self, index, header, body):
         section = Section(header, body=body,
                           value_converter=self._value_converter)
-        if index == 0 or index == len(self._sections):
-            self._sections.insert(index, section)
-            self._update_model(header, index, section)
-        else:
-            self._sections.insert(index, section)
-            self._create_model()
+        self._sections.insert(index, section)
+        self._update_model(header, index, section)
 
     def _update_model(self, header, index, section):
         if header not in self._model:
             self._model[header] = list()
         self._model[header].insert(index, section)
+
+    def _find_section_to_remove(self, index):
+        # find section at same index (the section to remove)
+        header = None
+        for i, section in enumerate(self._sections):
+            if i == index:
+                header = section.header
+        if header is None:
+            return
+        i1 = i2 = 0
+        for section in self._sections:
+            if i1 == index:
+                return header, i2
+            if section.header == header:
+                i2 += 1
+            i1 += 1

@@ -3,7 +3,7 @@ import unittest
 import datetime
 from decimal import Decimal
 from jesth import box, error
-from jesth.converter import ValueConverter, make_dict, flatten_dict
+from jesth.converter import ValueConverter, create_dict, flatten_dict
 
 
 BODY = r"""
@@ -90,7 +90,7 @@ class TestConversionFuncs(unittest.TestCase):
 
     def test(self):
         # Make a dict from BODY
-        dict_body = make_dict(BODY, strict=False)
+        dict_body = create_dict(BODY, strict=False)
         # Flatten the dict
         flat_body = flatten_dict(dict_body)
         # Make text from flatten body then compare with BODY

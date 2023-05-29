@@ -15,7 +15,7 @@ class TestRootImports(unittest.TestCase):
         jesth.render
         jesth.read
         jesth.write
-        jesth.make_dict
+        jesth.create_dict
         jesth.flatten_dict
         jesth.ValueConverter
         jesth.split_key_value

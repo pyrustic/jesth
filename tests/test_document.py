@@ -151,6 +151,22 @@ class TestDocumentRenderMethod(unittest.TestCase):
 
 class TestDocumentDataInsertionMethods(unittest.TestCase):
 
+    def test_set_section_at_begin(self):
+        text = "[section1]\n\n[section2]"
+        # insert at begin
+        document = parse(text)
+        document.set(0, "new_section")
+        expected = "[new_section]\n\n[section2]"
+        self.assertEqual(expected, document.render())
+
+    def test_set_section_at_end(self):
+        text = "[section1]\n\n[section2]"
+        # insert at the end
+        document = parse(text)
+        document.set(-1, "new_section")
+        expected = "[section1]\n\n[new_section]"
+        self.assertEqual(expected, document.render())
+
     def test_insert_at_begin(self):
         text = "[section1]\n\n[section2]"
         # insert at 0
@@ -163,7 +179,7 @@ class TestDocumentDataInsertionMethods(unittest.TestCase):
         text = "[section1]\n\n[section2]"
         # insert at the end
         document = parse(text)
-        document.insert(-1, "new_section")
+        document.insert(2, "new_section")
         expected = text + "\n\n[new_section]"
         self.assertEqual(expected, document.render())
 
@@ -188,11 +204,15 @@ class TestDocumentDataRetrivalMethods(unittest.TestCase):
         # default
         document = parse(USER_ONLY)
         user = document.get("user")
+        expected_body = ["id = 1", "name = 'alex'"]
+        self.assertEqual(expected_body, user.body)
+        # specific index
+        user = document.get("user", 1)
         expected_body = ["id = 2", "name = 'rustic'"]
         self.assertEqual(expected_body, user.body)
         # specific index
-        user = document.get("user", 0)
-        expected_body = ["id = 1", "name = 'alex'"]
+        user = document.get("user", -1)
+        expected_body = ["id = 2", "name = 'rustic'"]
         self.assertEqual(expected_body, user.body)
 
     def test_get_all_method(self):
@@ -218,8 +238,10 @@ class TestDocumentDataSuppressionMethods(unittest.TestCase):
         expected_body = ["id = 1", "name = 'alex'"]
         self.assertEqual(expected_body, user.body)
         self.assertEqual(1, document.count("user"))
+        self.assertEqual(1, count_sections(document, "user"))
 
     def test_remove_section_at_relative_index(self):
+        # remove first item
         document = parse(USER_ONLY)
         self.assertEqual(2, document.count("user"))
         document.remove("user", 0)
@@ -227,14 +249,36 @@ class TestDocumentDataSuppressionMethods(unittest.TestCase):
         expected_body = ["id = 2", "name = 'rustic'"]
         self.assertEqual(expected_body, user.body)
         self.assertEqual(1, document.count("user"))
+        self.assertEqual(1, count_sections(document, "user"))
+        # remove second item
+        document = parse(USER_ONLY)
+        document.remove("user", 1)
+        user = document.get("user")
+        expected_body = ["id = 1", "name = 'alex'"]
+        self.assertEqual(expected_body, user.body)
+        self.assertEqual(1, document.count("user"))
+        self.assertEqual(1, count_sections(document, "user"))
 
     def test_remove_all_method(self):
         document = parse(USER_AND_INFO)
         self.assertEqual(2, document.count("user"))
+        self.assertEqual(2, count_sections(document, "user"))
         self.assertEqual(1, document.count("info"))
+        self.assertEqual(1, count_sections(document, "info"))
         document.remove_all("user")
         self.assertEqual(0, document.count("user"))
+        self.assertEqual(0, count_sections(document, "user"))
         self.assertEqual(1, document.count("info"))
+        self.assertEqual(1, count_sections(document, "info"))
+
+
+def count_sections(document, header):
+    """Count sections in a document with a specific header"""
+    i = 0
+    for s in document.sections:
+        if s.header == header:
+            i += 1
+    return i
 
 
 if __name__ == '__main__':

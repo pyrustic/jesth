@@ -42,6 +42,38 @@ def split_key_value(line, sep="=", strip_whitespace=True):
     return key, value
 
 
+def correct_index(index, size, ignore_upper_bound=False):
+    """
+    Correct an index given to access an item in a list
+
+    [parameter]
+    - index: the integer representing the index of a list.
+      This number may be positive or negative. A too big number is corrected down to
+      the end index of the list.
+      A negative number from -1 accesses the list from the end. A too small number
+      is corrected up to 0.
+      Example: give 5 the size of the list.
+      Index -1 will be corrected to 4 and index 6 will be corrected to 4.
+      Index -4 will be corrected to 0 same as index -10
+    - size: an integer representing the size of the list
+
+    [return]
+    Return a corrected index integer
+    """
+    index = int(index)
+    negative_size = -size
+    end_index = size - 1
+    if index >= size:
+        if ignore_upper_bound:
+            return index
+        return end_index
+    if index < negative_size:
+        index = negative_size
+    if index < 0:
+        index = size - abs(index)
+    return index
+
+
 def ensure_parent_dir(path):
     """Make sure that parent dir exists (create it if isn't yet created)"""
     parent = os.path.dirname(path)

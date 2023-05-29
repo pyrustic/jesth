@@ -8,35 +8,14 @@ For convenience, this module exposes main classes and functions of the library
 
 > **Classes:** &nbsp; [Document](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Document.md#class-document) &nbsp;&nbsp; [Parser](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Parser.md#class-parser) &nbsp;&nbsp; [Section](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Section.md#class-section) &nbsp;&nbsp; [ValueConverter](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/ValueConverter.md#class-valueconverter)
 >
-> **Functions:** &nbsp; [flatten\_dict](#flatten_dict) &nbsp;&nbsp; [make\_dict](#make_dict) &nbsp;&nbsp; [parse](#parse) &nbsp;&nbsp; [read](#read) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [write](#write)
+> **Functions:** &nbsp; [create\_dict](#create_dict) &nbsp;&nbsp; [flatten\_dict](#flatten_dict) &nbsp;&nbsp; [parse](#parse) &nbsp;&nbsp; [read](#read) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [write](#write)
 >
 > **Constants:** &nbsp; None
 
 # All Functions
-[flatten\_dict](#flatten_dict) &nbsp;&nbsp; [make\_dict](#make_dict) &nbsp;&nbsp; [parse](#parse) &nbsp;&nbsp; [read](#read) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [write](#write)
+[create\_dict](#create_dict) &nbsp;&nbsp; [flatten\_dict](#flatten_dict) &nbsp;&nbsp; [parse](#parse) &nbsp;&nbsp; [read](#read) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [write](#write)
 
-## flatten\_dict
-Convert a Python dict into a list of strings (section body in the base form)
-
-
-
-**Signature:** (data, value\_converter=None)
-
-|Parameter|Description|
-|---|---|
-|data|Python dict (I do recommend an OrderedDict)|
-|value\_converter|instance of ValueConverter to customize value encoding|
-
-
-
-
-
-**Return Value:** Returns a list of strings
-
-[Back to Top](#module-overview)
-
-
-## make\_dict
+## create\_dict
 Convert a section body into a Python dict
 
 
@@ -57,7 +36,28 @@ Convert a section body into a Python dict
 
 
 
-**Return Value:** Returns a Python dict (OrderedDict by default, customizable with ValueConverter)
+**Return Value:** Returns a Python dict (type customizable with ValueConverter)
+
+[Back to Top](#module-overview)
+
+
+## flatten\_dict
+Convert a Python dict into a list of strings (section body in the base form)
+
+
+
+**Signature:** (data, value\_converter=None)
+
+|Parameter|Description|
+|---|---|
+|data|Python dict|
+|value\_converter|instance of ValueConverter to customize value encoding|
+
+
+
+
+
+**Return Value:** Returns a list of strings
 
 [Back to Top](#module-overview)
 

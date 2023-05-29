@@ -31,7 +31,7 @@ No class attributes.
 
 
 # All Methods
-[\_\_init\_\_](#__init__) &nbsp;&nbsp; [get\_dict](#get_dict) &nbsp;&nbsp; [make\_dict](#make_dict) &nbsp;&nbsp; [update](#update)
+[\_\_init\_\_](#__init__) &nbsp;&nbsp; [create\_dict](#create_dict) &nbsp;&nbsp; [to\_dict](#to_dict) &nbsp;&nbsp; [to\_text](#to_text) &nbsp;&nbsp; [update](#update)
 
 ## \_\_init\_\_
 Init a section
@@ -55,32 +55,8 @@ Init a section
 [Back to Top](#module-overview)
 
 
-## get\_dict
-Try to convert the body of this section into a dict.
-Return fallback if failed to convert
-
-
-
-**Signature:** (self, default=None, fallback=None, \*, strict=True)
-
-|Parameter|Description|
-|---|---|
-|default|Value to return if the body has been successfully converted into an empty dict. Note that `default` will be updated to contain an empty OrderedDict if you leave it set to None.|
-|fallback|Value to return if the attempt to convert the body into a dict failed|
-|strict|set True if you don't want to preserve comments and whitespaces|
-
-
-
-
-
-**Return Value:** If everything is ok, a dict (OrderedDict) will be returned.
-Else the value of `default` or `fallback` will be returned.
-
-[Back to Top](#module-overview)
-
-
-## make\_dict
-Try to convert the body of this section into a dict (OrderedDict).
+## create\_dict
+Try to build a dict object out of the body of this section.
 Raise an exception if an error occurs !
 Return `default` if the body has been created but is empty
 
@@ -90,15 +66,59 @@ Return `default` if the body has been created but is empty
 
 |Parameter|Description|
 |---|---|
-|default|Value to return if the body has been successfully converted into an empty dict. Note that `default` will be updated to contain an empty OrderedDict if you leave it set to None.|
+|default|Value to return if the body has been successfully converted into an empty dict. Note that `default` will be updated to contain an empty dict (from ValueConverter.dict_type) if you leave it set to None.|
 |strict|set True if you don't want to preserve comments and whitespaces|
 
 
 
 
 
-**Return Value:** If everything is ok, a dict (OrderedDict) will be returned or the value of `default`
+**Return Value:** If everything is ok, a dict will be returned or the value of `default`
 Exceptions will be raised whenever a problem will arise !
+
+[Back to Top](#module-overview)
+
+
+## to\_dict
+Try to convert the body of this section to a dict.
+Return a fallback value if failed to convert
+
+
+
+**Signature:** (self, default=None, fallback=None, \*, strict=True)
+
+|Parameter|Description|
+|---|---|
+|default|Value to return if the body has been successfully converted into a dict but empty. Note that `default` will be updated to contain an empty dict (from ValueConverter.dict_type) if you leave it set to None.|
+|fallback|Value to return if the attempt to convert the body into a dict failed|
+|strict|set True if you don't want to preserve comments and whitespaces|
+
+
+
+
+
+**Return Value:** If everything is ok, a dict will be returned.
+Else the value of `default` or `fallback` will be returned.
+
+[Back to Top](#module-overview)
+
+
+## to\_text
+        Return the body (list of lines) as a text string.
+
+        [return]
+        Return a string built with: `"
+".join(self._body)`
+
+
+
+**Signature:** (self)
+
+
+
+
+
+**Return Value:** None
 
 [Back to Top](#module-overview)
 

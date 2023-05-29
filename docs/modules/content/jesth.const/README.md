@@ -10,4 +10,4 @@ No description
 >
 > **Functions:** &nbsp; None
 >
-> **Constants:** &nbsp; HOME &nbsp;&nbsp; INDENT_WIDTH &nbsp;&nbsp; JESTH_DIR &nbsp;&nbsp; PYRUSTIC_HOME
+> **Constants:** &nbsp; HOME &nbsp;&nbsp; INDENT_WIDTH

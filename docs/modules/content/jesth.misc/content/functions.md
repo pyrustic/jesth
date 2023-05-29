@@ -8,12 +8,12 @@ Private miscellaneous functions. Only "split_key_value" is public
 
 > **Classes:** &nbsp; [FloatParts](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.misc/content/classes/FloatParts.md#class-floatparts)
 >
-> **Functions:** &nbsp; [\_parse\_mantissa](#_parse_mantissa) &nbsp;&nbsp; [\_prepare\_float](#_prepare_float) &nbsp;&nbsp; [\_tidy\_up\_right\_mantissa](#_tidy_up_right_mantissa) &nbsp;&nbsp; [add\_leading\_backslashes](#add_leading_backslashes) &nbsp;&nbsp; [clean\_leading\_backslashes](#clean_leading_backslashes) &nbsp;&nbsp; [count\_indents](#count_indents) &nbsp;&nbsp; [decode\_unicode](#decode_unicode) &nbsp;&nbsp; [encode\_unicode](#encode_unicode) &nbsp;&nbsp; [ensure\_parent\_dir](#ensure_parent_dir) &nbsp;&nbsp; [get\_headers](#get_headers) &nbsp;&nbsp; [parse\_float](#parse_float) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [tidy\_up\_bin](#tidy_up_bin) &nbsp;&nbsp; [tidy\_up\_float](#tidy_up_float) &nbsp;&nbsp; [tidy\_up\_hex](#tidy_up_hex) &nbsp;&nbsp; [tidy\_up\_int](#tidy_up_int) &nbsp;&nbsp; [tidy\_up\_oct](#tidy_up_oct) &nbsp;&nbsp; [update\_cached\_refs](#update_cached_refs)
+> **Functions:** &nbsp; [\_parse\_mantissa](#_parse_mantissa) &nbsp;&nbsp; [\_prepare\_float](#_prepare_float) &nbsp;&nbsp; [\_tidy\_up\_right\_mantissa](#_tidy_up_right_mantissa) &nbsp;&nbsp; [add\_leading\_backslashes](#add_leading_backslashes) &nbsp;&nbsp; [clean\_leading\_backslashes](#clean_leading_backslashes) &nbsp;&nbsp; [correct\_index](#correct_index) &nbsp;&nbsp; [count\_indents](#count_indents) &nbsp;&nbsp; [decode\_unicode](#decode_unicode) &nbsp;&nbsp; [encode\_unicode](#encode_unicode) &nbsp;&nbsp; [ensure\_parent\_dir](#ensure_parent_dir) &nbsp;&nbsp; [get\_headers](#get_headers) &nbsp;&nbsp; [parse\_float](#parse_float) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [tidy\_up\_bin](#tidy_up_bin) &nbsp;&nbsp; [tidy\_up\_float](#tidy_up_float) &nbsp;&nbsp; [tidy\_up\_hex](#tidy_up_hex) &nbsp;&nbsp; [tidy\_up\_int](#tidy_up_int) &nbsp;&nbsp; [tidy\_up\_oct](#tidy_up_oct) &nbsp;&nbsp; [update\_cached\_refs](#update_cached_refs)
 >
 > **Constants:** &nbsp; None
 
 # All Functions
-[\_parse\_mantissa](#_parse_mantissa) &nbsp;&nbsp; [\_prepare\_float](#_prepare_float) &nbsp;&nbsp; [\_tidy\_up\_right\_mantissa](#_tidy_up_right_mantissa) &nbsp;&nbsp; [add\_leading\_backslashes](#add_leading_backslashes) &nbsp;&nbsp; [clean\_leading\_backslashes](#clean_leading_backslashes) &nbsp;&nbsp; [count\_indents](#count_indents) &nbsp;&nbsp; [decode\_unicode](#decode_unicode) &nbsp;&nbsp; [encode\_unicode](#encode_unicode) &nbsp;&nbsp; [ensure\_parent\_dir](#ensure_parent_dir) &nbsp;&nbsp; [get\_headers](#get_headers) &nbsp;&nbsp; [parse\_float](#parse_float) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [tidy\_up\_bin](#tidy_up_bin) &nbsp;&nbsp; [tidy\_up\_float](#tidy_up_float) &nbsp;&nbsp; [tidy\_up\_hex](#tidy_up_hex) &nbsp;&nbsp; [tidy\_up\_int](#tidy_up_int) &nbsp;&nbsp; [tidy\_up\_oct](#tidy_up_oct) &nbsp;&nbsp; [update\_cached\_refs](#update_cached_refs)
+[\_parse\_mantissa](#_parse_mantissa) &nbsp;&nbsp; [\_prepare\_float](#_prepare_float) &nbsp;&nbsp; [\_tidy\_up\_right\_mantissa](#_tidy_up_right_mantissa) &nbsp;&nbsp; [add\_leading\_backslashes](#add_leading_backslashes) &nbsp;&nbsp; [clean\_leading\_backslashes](#clean_leading_backslashes) &nbsp;&nbsp; [correct\_index](#correct_index) &nbsp;&nbsp; [count\_indents](#count_indents) &nbsp;&nbsp; [decode\_unicode](#decode_unicode) &nbsp;&nbsp; [encode\_unicode](#encode_unicode) &nbsp;&nbsp; [ensure\_parent\_dir](#ensure_parent_dir) &nbsp;&nbsp; [get\_headers](#get_headers) &nbsp;&nbsp; [parse\_float](#parse_float) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [tidy\_up\_bin](#tidy_up_bin) &nbsp;&nbsp; [tidy\_up\_float](#tidy_up_float) &nbsp;&nbsp; [tidy\_up\_hex](#tidy_up_hex) &nbsp;&nbsp; [tidy\_up\_int](#tidy_up_int) &nbsp;&nbsp; [tidy\_up\_oct](#tidy_up_oct) &nbsp;&nbsp; [update\_cached\_refs](#update_cached_refs)
 
 ## \_parse\_mantissa
 No description
@@ -93,6 +93,22 @@ character on the line is an opening square bracket.
 
 
 **Return Value:** None
+
+[Back to Top](#module-overview)
+
+
+## correct\_index
+Correct an index given to access an item in a list
+
+
+
+**Signature:** (index, size, ignore\_upper\_bound=False)
+
+
+
+
+
+**Return Value:** Return a corrected index integer
 
 [Back to Top](#module-overview)
 

@@ -8,7 +8,7 @@ For convenience, this module exposes main classes and functions of the library
 
 > **Classes:** &nbsp; [Document](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Document.md#class-document) &nbsp;&nbsp; [Parser](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Parser.md#class-parser) &nbsp;&nbsp; [Section](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Section.md#class-section) &nbsp;&nbsp; [ValueConverter](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/ValueConverter.md#class-valueconverter)
 >
-> **Functions:** &nbsp; [flatten\_dict](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#flatten_dict) &nbsp;&nbsp; [make\_dict](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#make_dict) &nbsp;&nbsp; [parse](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#parse) &nbsp;&nbsp; [read](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#read) &nbsp;&nbsp; [render](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#render) &nbsp;&nbsp; [split\_key\_value](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#split_key_value) &nbsp;&nbsp; [write](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#write)
+> **Functions:** &nbsp; [create\_dict](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#create_dict) &nbsp;&nbsp; [flatten\_dict](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#flatten_dict) &nbsp;&nbsp; [parse](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#parse) &nbsp;&nbsp; [read](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#read) &nbsp;&nbsp; [render](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#render) &nbsp;&nbsp; [split\_key\_value](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#split_key_value) &nbsp;&nbsp; [write](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#write)
 >
 > **Constants:** &nbsp; None
 
@@ -34,7 +34,7 @@ No class attributes.
 
 
 # All Methods
-[\_\_init\_\_](#__init__) &nbsp;&nbsp; [append](#append) &nbsp;&nbsp; [count](#count) &nbsp;&nbsp; [get](#get) &nbsp;&nbsp; [get\_all](#get_all) &nbsp;&nbsp; [insert](#insert) &nbsp;&nbsp; [remove](#remove) &nbsp;&nbsp; [remove\_all](#remove_all) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [save](#save) &nbsp;&nbsp; [save\_to](#save_to) &nbsp;&nbsp; [\_create\_model](#_create_model) &nbsp;&nbsp; [\_insert](#_insert) &nbsp;&nbsp; [\_setup](#_setup) &nbsp;&nbsp; [\_update\_model](#_update_model)
+[\_\_init\_\_](#__init__) &nbsp;&nbsp; [append](#append) &nbsp;&nbsp; [count](#count) &nbsp;&nbsp; [get](#get) &nbsp;&nbsp; [get\_all](#get_all) &nbsp;&nbsp; [insert](#insert) &nbsp;&nbsp; [remove](#remove) &nbsp;&nbsp; [remove\_all](#remove_all) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [save](#save) &nbsp;&nbsp; [save\_to](#save_to) &nbsp;&nbsp; [set](#set) &nbsp;&nbsp; [\_create\_model](#_create_model) &nbsp;&nbsp; [\_find\_section\_to\_remove](#_find_section_to_remove) &nbsp;&nbsp; [\_insert](#_insert) &nbsp;&nbsp; [\_setup](#_setup) &nbsp;&nbsp; [\_update\_model](#_update_model)
 
 ## \_\_init\_\_
 Init the document
@@ -105,12 +105,12 @@ Get X named section object located at Y index relatively to others sections with
 
 
 
-**Signature:** (self, header, index=-1)
+**Signature:** (self, header, sub\_index=0)
 
 |Parameter|Description|
 |---|---|
 |header|the header (string) of the section|
-|index|integer index, relatively to the section family (sections sharing this same header). Defaults to -1, thus will be returned, the last section with this header relatively to this header family.|
+|index|integer index, relatively to the section family (sections sharing this same header). Defaults to 0, thus will be returned, the first section with this header relatively to this header family.|
 
 
 
@@ -168,7 +168,7 @@ Remove a section from this document
 
 
 
-**Signature:** (self, header, index=-1)
+**Signature:** (self, header, sub\_index=-1)
 
 |Parameter|Description|
 |---|---|
@@ -264,12 +264,50 @@ Save the document in a specific filename
 [Back to Top](#module-overview)
 
 
+## set
+Set a section at a specific index of the document
+
+
+
+**Signature:** (self, index, header, body=None)
+
+|Parameter|Description|
+|---|---|
+|index|the index integer|
+|header|the header string of the section|
+|body|the body of the section, may be a list of string, a dictionary, or a text string|
+
+
+
+
+
+**Return Value:** None
+
+[Back to Top](#module-overview)
+
+
 ## \_create\_model
 No description
 
 
 
 **Signature:** (self)
+
+
+
+
+
+**Return Value:** None
+
+[Back to Top](#module-overview)
+
+
+## \_find\_section\_to\_remove
+No description
+
+
+
+**Signature:** (self, index)
 
 
 

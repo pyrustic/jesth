@@ -63,55 +63,69 @@ class TestSectionClass(unittest.TestCase):
             # body should be a list of string, a dict, or a string
             section.update(invalid_base_body)
 
-    def test_make_dict_body(self):
+    def test_create_dict(self):
         # test with empty body
         section = Section("")
-        r = section.make_dict()
+        r = section.create_dict()
         self.assertEqual(OrderedDict(), r)
         # empty body + default parameter set
         default = {"is_empty": True}
-        r = section.make_dict(default)
+        r = section.create_dict(default)
         self.assertIs(default, r)
         # == test with existent and compatible body
         section.update(BASE_BODY)
         # compact_mode = true
-        r = section.make_dict(strict=True)
+        r = section.create_dict(strict=True)
         self.assertIsNotNone(r)
         self.assertFalse(_find_comment(r))
         # compact_mode = false
-        r = section.make_dict(strict=False)
+        r = section.create_dict(strict=False)
         self.assertIsNotNone(r)
         self.assertTrue(_find_comment(r))
 
-    def test_make_dict_body_with_incompatible_body(self):
+    def test_create_dict_with_incompatible_body(self):
         section = Section("", ["hello world"])
         with self.assertRaises(Exception):
-            section.make_dict()
+            section.create_dict()
 
-    def test_get_dict_body(self):
+    def test_to_text(self):
+        # non-empty body
+        section = Section("", ["hello", "world"])
+        r = section.to_text()
+        expected = "hello\nworld"
+        self.assertEqual(expected, r)
+
+    def test_to_text_with_empty_body(self):
+        # empty body
+        section = Section("")
+        r = section.to_text()
+        expected = ""
+        self.assertEqual(expected, r)
+
+    def test_to_dict(self):
         # test with empty body
         section = Section("")
-        r = section.get_dict()
+        r = section.to_dict()
         self.assertEqual(OrderedDict(), r)
         # empty body + default parameter set
         default = {"is_empty": True}
-        r = section.get_dict(default)
+        r = section.to_dict(default)
         self.assertIs(default, r)
         # == test with existent and compatible body
         section.update(BASE_BODY)
         # compact_mode = true
-        r = section.get_dict(strict=True)
+        r = section.to_dict(strict=True)
         self.assertIsNotNone(r)
         self.assertFalse(_find_comment(r))
         # compact_mode = false
-        r = section.get_dict(strict=False)
+        r = section.to_dict(strict=False)
         self.assertIsNotNone(r)
         self.assertTrue(_find_comment(r))
 
-    def test_get_dict_body_with_incompatible_body(self):
+    def test_to_dict_with_incompatible_body(self):
         section = Section("", ["hello world"])
         fallback = {"something_wrong": True}
-        r = section.get_dict(fallback=fallback)
+        r = section.to_dict(fallback=fallback)
         self.assertEqual(fallback, r)
 
 
