@@ -1,8 +1,40 @@
 """Private miscellaneous functions. Only "split_key_value" is public"""
 import os
 import os.path
+import pathlib
+from tempfile import NamedTemporaryFile
 from collections import namedtuple
-from jesth import error, const
+from jesth import errors, const
+try:
+    import fcntl
+except ImportError:
+    fcntl = None
+
+
+def write_to_file(data, dest):
+    """
+    Write to a file (TRY to do it atomically for GNU/Linux and MacOS)
+    Check https://danluu.com/file-consistency/
+
+    [parameters]
+    - data: str, data to write to file
+    - dest: a pathlib.Path instance, or a path string
+    - binary_mode: boolean to tell if data should be written in dest with
+      binary mode on (mode="wb")
+    - encoding: defaults to "utf-8" and automatically set to None when
+      binary mode is True
+    """
+    if isinstance(dest, pathlib.Path):
+        dest = str(dest.resolve())
+    if isinstance(dest, str):
+        ensure_parent_dir(dest)
+    else:
+        msg = "Destination should be a path string or a pathlib.Path instance"
+        raise errors.Error(msg)
+    if os.path.isdir(dest):
+        msg = "Destination shouldn't be a directory but a file path (which exists or not)"
+        raise errors.Error(msg)
+    WriteToFile.write(data, dest)
 
 
 def split_key_value(line, sep="=", strip_whitespace=True):
@@ -23,20 +55,20 @@ def split_key_value(line, sep="=", strip_whitespace=True):
     Returns a ("key", "value") tuple if everything is Ok
 
     [exceptions]
-    - error.Error: if the separator, the key, or the value is missing,
+    - errors.Error: if the separator, the key, or the value is missing,
     """
     cache = line.split(sep, maxsplit=1)
     if len(cache) != 2:
         msg = "Missing separator character '{}' in '{}'"
         msg = msg.format(sep, line)
-        raise error.Error(msg)
+        raise errors.Error(msg)
     key, value = cache
     if not key or key.isspace():
         msg = "Missing key in '{}'".format(line)
-        raise error.Error(msg)
+        raise errors.Error(msg)
     if not value or value.isspace():
         msg = "Missing value in '{}'".format(line)
-        raise error.Error(msg)
+        raise errors.Error(msg)
     if strip_whitespace:
         key, value = key.strip(), value.strip()
     return key, value
@@ -82,13 +114,13 @@ def ensure_parent_dir(path):
     except FileExistsError as e:
         pass
 
-
+"""
 def update_cached_refs(value, cached_refs):
     if value in cached_refs:
-        raise error.Error("Circular reference isn't allowed !")
+        raise errors.Error("Circular reference isn't allowed !")
     else:
         cached_refs.append(value)
-
+"""
 
 def count_indents(line):
     i = 0
@@ -100,7 +132,7 @@ def count_indents(line):
     x = i / const.INDENT_WIDTH
     y = int(x)
     if x > y:
-        raise error.IndentError
+        raise errors.IndentError
     return y
 
 
@@ -265,13 +297,13 @@ def tidy_up_oct(s, width=4):
     return s
 
 
-FloatParts = namedtuple('FloatParts', ['left_mantissa', 'right_mantissa', 'exponent'])
+FloatParts = namedtuple("FloatParts", ["left_mantissa", "right_mantissa", "exponent"])
 
 
 def parse_float(s):
     """Parse a float number (string or decimal.Decimal or float), returns
     an instance of this namedtuple:
-    FloatParts = namedtuple('FloatParts', ['left_mantissa', 'right_mantissa', 'exponent'])"""
+    FloatParts = namedtuple("FloatParts", ["left_mantissa", "right_mantissa", "exponent"])"""
     s = _prepare_float(s)
     # Split s at the exponent separator
     parts = s.split("E", 1)
@@ -305,3 +337,70 @@ def _parse_mantissa(s):
     right_mantissa = parts[1] if len(parts) == 2 else ""
     return left_mantissa, right_mantissa
 
+
+# --- write to file
+
+class WriteToFile:
+    @staticmethod
+    def write(data, dest):
+        # update encoding and mode
+        binary_mode = True if isinstance(data, bytes) else False
+        encoding = None if binary_mode else "utf-8"
+        mode = "wb" if binary_mode else "w"
+        # get parent dir and open file
+        parent_dir = os.path.dirname(dest)
+        # create temp file
+        t = NamedTemporaryFile(prefix=".jesth_write_to_file_",
+                               suffix=".temp", dir=parent_dir, delete=False)
+        # write
+        try:
+            WriteToFile._write(data, t.name, mode, encoding)
+            os.replace(t.name, dest)
+            WriteToFile.sync_dir(parent_dir)
+        except Exception as e:
+            pass
+        finally:
+            try:
+                os.unlink(t.name)
+            except Exception as e:
+                pass
+
+    @staticmethod
+    def _write(data, dest, mode, encoding):
+        with open(dest, mode, encoding=encoding) as file:
+            file.write(data)
+            WriteToFile.sync_file(file)
+
+    @staticmethod
+    def sync_file(file):
+        # file flush
+        file.flush()
+        # fsync the file
+        fd = file.fileno()
+        os.fsync(fd)
+        WriteToFile.full_sync(fd)
+
+    @staticmethod
+    def sync_dir(path):
+        # fsync parent dir also
+        # https://man7.org/linux/man-pages/man2/fsync.2.html
+        fd = os.open(path, os.O_RDONLY)
+        try:
+            os.fsync(fd)
+            WriteToFile.full_sync(fd)
+        except Exception as e:
+            pass
+        finally:
+            os.close(fd)
+
+    @staticmethod
+    def full_sync(fd):
+        # https://lists.apple.com/archives/darwin-dev/2005/Feb/msg00072.html
+        if fcntl and hasattr(fcntl, "F_FULLFSYNC"):
+            try:
+                fcntl.fcntl(fd, fcntl.F_FULLFSYNC)
+            except Exception as e:
+                return False
+            else:
+                return True
+        return False

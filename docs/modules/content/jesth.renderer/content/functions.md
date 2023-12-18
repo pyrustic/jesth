@@ -8,28 +8,12 @@ This module exposes render and write functions
 
 > **Classes:** &nbsp; None
 >
-> **Functions:** &nbsp; [\_write\_to\_file](#_write_to_file) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [write](#write)
+> **Functions:** &nbsp; [render](#render) &nbsp;&nbsp; [write](#write)
 >
 > **Constants:** &nbsp; None
 
 # All Functions
-[\_write\_to\_file](#_write_to_file) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [write](#write)
-
-## \_write\_to\_file
-No description
-
-
-
-**Signature:** (destination, data)
-
-
-
-
-
-**Return Value:** None
-
-[Back to Top](#module-overview)
-
+[render](#render) &nbsp;&nbsp; [write](#write)
 
 ## render
 Convert a jesth document into plain text

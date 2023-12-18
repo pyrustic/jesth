@@ -50,15 +50,7 @@ def write(document, destination):
     """
     data = render(document)
     if isinstance(destination, pathlib.Path) or isinstance(destination, str):
-        _write_to_file(destination, data)
+        misc.write_to_file(data, destination)
     else:
         destination.write(data.encode("utf-8"))
     return data
-
-
-def _write_to_file(destination, data):
-    if isinstance(destination, pathlib.Path):
-        destination = str(destination.resolve())
-    misc.ensure_parent_dir(destination)
-    with open(destination, "w", encoding="utf-8") as file:
-        file.write(data)

@@ -2,7 +2,7 @@ import decimal
 import unittest
 import datetime
 from decimal import Decimal
-from jesth import box, error
+from jesth import box, errors
 from jesth.converter import ValueConverter, create_dict, flatten_dict
 
 
@@ -367,7 +367,7 @@ class TestValueConverterClass(unittest.TestCase):
 
     def test_fallback_decoder(self):
         val = "goto"
-        with self.assertRaises(error.ConversionError):
+        with self.assertRaises(errors.ConversionError):
             self._value_converter.decode(val)
 
 

@@ -32,7 +32,7 @@ Convert a section body into a Python dict
 
 |Exception|Description|
 |---|---|
-|jesth.error.ConversionError|raised when an error occured while doing conversion|
+|jesth.errors.ConversionError|raised when an errors occured while doing conversion|
 
 
 

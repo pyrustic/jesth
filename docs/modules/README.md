@@ -20,12 +20,27 @@ No description
 Classes and functions to convert a section body into a Python dict, or flatten a Python dict into a section body
 
 
+[jesth.dataformat.binary](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.dataformat.binary/README.md#module-overview)
+<br>
+No description
+
+
+[jesth.dataformat.text](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.dataformat.text/README.md#module-overview)
+<br>
+No description
+
+
+[jesth.deserializer](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.deserializer/README.md#module-overview)
+<br>
+No description
+
+
 [jesth.document](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.document/README.md#module-overview)
 <br>
 Document class for creating model for Jesth data or to interacting with a Jesthfile
 
 
-[jesth.error](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.error/README.md#module-overview)
+[jesth.errors](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.errors/README.md#module-overview)
 <br>
 Errors classes
 
@@ -48,5 +63,20 @@ This module exposes render and write functions
 [jesth.section](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.section/README.md#module-overview)
 <br>
 Definition of the Section class
+
+
+[jesth.serializer](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.serializer/README.md#module-overview)
+<br>
+No description
+
+
+[jesth.tagbyte](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.tagbyte/README.md#module-overview)
+<br>
+No description
+
+
+[jesth.validator](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.validator/README.md#module-overview)
+<br>
+No description
 
 

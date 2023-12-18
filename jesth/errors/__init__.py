@@ -2,7 +2,7 @@
 
 
 class Error(Exception):
-    """Root error class for the Jesth Python library"""
+    """Root errors class for the Jesth Python library"""
     pass
 
 
@@ -12,5 +12,5 @@ class ConversionError(Error):
 
 
 class IndentError(Error):
-    """Indent error while parsing a section body"""
+    """Indent errors while parsing a section body"""
     pass

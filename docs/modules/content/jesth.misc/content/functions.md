@@ -6,14 +6,14 @@ Back to [All Modules](https://github.com/pyrustic/jesth/blob/master/docs/modules
  
 Private miscellaneous functions. Only "split_key_value" is public
 
-> **Classes:** &nbsp; [FloatParts](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.misc/content/classes/FloatParts.md#class-floatparts)
+> **Classes:** &nbsp; [FloatParts](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.misc/content/classes/FloatParts.md#class-floatparts) &nbsp;&nbsp; [WriteToFile](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.misc/content/classes/WriteToFile.md#class-writetofile)
 >
-> **Functions:** &nbsp; [\_parse\_mantissa](#_parse_mantissa) &nbsp;&nbsp; [\_prepare\_float](#_prepare_float) &nbsp;&nbsp; [\_tidy\_up\_right\_mantissa](#_tidy_up_right_mantissa) &nbsp;&nbsp; [add\_leading\_backslashes](#add_leading_backslashes) &nbsp;&nbsp; [clean\_leading\_backslashes](#clean_leading_backslashes) &nbsp;&nbsp; [correct\_index](#correct_index) &nbsp;&nbsp; [count\_indents](#count_indents) &nbsp;&nbsp; [decode\_unicode](#decode_unicode) &nbsp;&nbsp; [encode\_unicode](#encode_unicode) &nbsp;&nbsp; [ensure\_parent\_dir](#ensure_parent_dir) &nbsp;&nbsp; [get\_headers](#get_headers) &nbsp;&nbsp; [parse\_float](#parse_float) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [tidy\_up\_bin](#tidy_up_bin) &nbsp;&nbsp; [tidy\_up\_float](#tidy_up_float) &nbsp;&nbsp; [tidy\_up\_hex](#tidy_up_hex) &nbsp;&nbsp; [tidy\_up\_int](#tidy_up_int) &nbsp;&nbsp; [tidy\_up\_oct](#tidy_up_oct) &nbsp;&nbsp; [update\_cached\_refs](#update_cached_refs)
+> **Functions:** &nbsp; [\_parse\_mantissa](#_parse_mantissa) &nbsp;&nbsp; [\_prepare\_float](#_prepare_float) &nbsp;&nbsp; [\_tidy\_up\_right\_mantissa](#_tidy_up_right_mantissa) &nbsp;&nbsp; [add\_leading\_backslashes](#add_leading_backslashes) &nbsp;&nbsp; [clean\_leading\_backslashes](#clean_leading_backslashes) &nbsp;&nbsp; [correct\_index](#correct_index) &nbsp;&nbsp; [count\_indents](#count_indents) &nbsp;&nbsp; [decode\_unicode](#decode_unicode) &nbsp;&nbsp; [encode\_unicode](#encode_unicode) &nbsp;&nbsp; [ensure\_parent\_dir](#ensure_parent_dir) &nbsp;&nbsp; [get\_headers](#get_headers) &nbsp;&nbsp; [parse\_float](#parse_float) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [tidy\_up\_bin](#tidy_up_bin) &nbsp;&nbsp; [tidy\_up\_float](#tidy_up_float) &nbsp;&nbsp; [tidy\_up\_hex](#tidy_up_hex) &nbsp;&nbsp; [tidy\_up\_int](#tidy_up_int) &nbsp;&nbsp; [tidy\_up\_oct](#tidy_up_oct) &nbsp;&nbsp; [write\_to\_file](#write_to_file)
 >
 > **Constants:** &nbsp; None
 
 # All Functions
-[\_parse\_mantissa](#_parse_mantissa) &nbsp;&nbsp; [\_prepare\_float](#_prepare_float) &nbsp;&nbsp; [\_tidy\_up\_right\_mantissa](#_tidy_up_right_mantissa) &nbsp;&nbsp; [add\_leading\_backslashes](#add_leading_backslashes) &nbsp;&nbsp; [clean\_leading\_backslashes](#clean_leading_backslashes) &nbsp;&nbsp; [correct\_index](#correct_index) &nbsp;&nbsp; [count\_indents](#count_indents) &nbsp;&nbsp; [decode\_unicode](#decode_unicode) &nbsp;&nbsp; [encode\_unicode](#encode_unicode) &nbsp;&nbsp; [ensure\_parent\_dir](#ensure_parent_dir) &nbsp;&nbsp; [get\_headers](#get_headers) &nbsp;&nbsp; [parse\_float](#parse_float) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [tidy\_up\_bin](#tidy_up_bin) &nbsp;&nbsp; [tidy\_up\_float](#tidy_up_float) &nbsp;&nbsp; [tidy\_up\_hex](#tidy_up_hex) &nbsp;&nbsp; [tidy\_up\_int](#tidy_up_int) &nbsp;&nbsp; [tidy\_up\_oct](#tidy_up_oct) &nbsp;&nbsp; [update\_cached\_refs](#update_cached_refs)
+[\_parse\_mantissa](#_parse_mantissa) &nbsp;&nbsp; [\_prepare\_float](#_prepare_float) &nbsp;&nbsp; [\_tidy\_up\_right\_mantissa](#_tidy_up_right_mantissa) &nbsp;&nbsp; [add\_leading\_backslashes](#add_leading_backslashes) &nbsp;&nbsp; [clean\_leading\_backslashes](#clean_leading_backslashes) &nbsp;&nbsp; [correct\_index](#correct_index) &nbsp;&nbsp; [count\_indents](#count_indents) &nbsp;&nbsp; [decode\_unicode](#decode_unicode) &nbsp;&nbsp; [encode\_unicode](#encode_unicode) &nbsp;&nbsp; [ensure\_parent\_dir](#ensure_parent_dir) &nbsp;&nbsp; [get\_headers](#get_headers) &nbsp;&nbsp; [parse\_float](#parse_float) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [tidy\_up\_bin](#tidy_up_bin) &nbsp;&nbsp; [tidy\_up\_float](#tidy_up_float) &nbsp;&nbsp; [tidy\_up\_hex](#tidy_up_hex) &nbsp;&nbsp; [tidy\_up\_int](#tidy_up_int) &nbsp;&nbsp; [tidy\_up\_oct](#tidy_up_oct) &nbsp;&nbsp; [write\_to\_file](#write_to_file)
 
 ## \_parse\_mantissa
 No description
@@ -199,7 +199,7 @@ returns the set of headers from this list of sections
 ## parse\_float
 Parse a float number (string or decimal.Decimal or float), returns
 an instance of this namedtuple:
-FloatParts = namedtuple('FloatParts', ['left_mantissa', 'right_mantissa', 'exponent'])
+FloatParts = namedtuple("FloatParts", ["left_mantissa", "right_mantissa", "exponent"])
 
 
 
@@ -234,7 +234,7 @@ The return will be: ("name": "John Doe")
 
 |Exception|Description|
 |---|---|
-|error.Error|if the separator, the key, or the value is missing,|
+|errors.Error|if the separator, the key, or the value is missing,|
 
 
 
@@ -328,12 +328,20 @@ Example: 0o45631456202 -> 0o456_3145_6202
 [Back to Top](#module-overview)
 
 
-## update\_cached\_refs
-No description
+## write\_to\_file
+Write to a file (TRY to do it atomically for GNU/Linux and MacOS)
+Check https://danluu.com/file-consistency/
 
 
 
-**Signature:** (value, cached\_refs)
+**Signature:** (data, dest)
+
+|Parameter|Description|
+|---|---|
+|data|str, data to write to file|
+|dest|a pathlib.Path instance, or a path string|
+|binary\_mode|boolean to tell if data should be written in dest with binary mode on (mode="wb")|
+|encoding|defaults to "utf-8" and automatically set to None when binary mode is True|
 
 
 

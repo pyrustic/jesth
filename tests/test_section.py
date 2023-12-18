@@ -1,7 +1,7 @@
 import unittest
 from collections import OrderedDict
 from decimal import Decimal
-from jesth import box, error
+from jesth import box, errors
 from jesth.section import Section
 from jesth.converter import ValueConverter
 
@@ -59,7 +59,7 @@ class TestSectionClass(unittest.TestCase):
     def test_update_body(self):
         section = Section("header")
         invalid_base_body = 3.14
-        with self.assertRaises(error.ConversionError):
+        with self.assertRaises(errors.ConversionError):
             # body should be a list of string, a dict, or a string
             section.update(invalid_base_body)
 

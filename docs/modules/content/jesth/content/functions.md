@@ -8,12 +8,12 @@ For convenience, this module exposes main classes and functions of the library
 
 > **Classes:** &nbsp; [Document](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Document.md#class-document) &nbsp;&nbsp; [Parser](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Parser.md#class-parser) &nbsp;&nbsp; [Section](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Section.md#class-section) &nbsp;&nbsp; [ValueConverter](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/ValueConverter.md#class-valueconverter)
 >
-> **Functions:** &nbsp; [create\_dict](#create_dict) &nbsp;&nbsp; [flatten\_dict](#flatten_dict) &nbsp;&nbsp; [parse](#parse) &nbsp;&nbsp; [read](#read) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [write](#write)
+> **Functions:** &nbsp; [create\_dict](#create_dict) &nbsp;&nbsp; [decode](#decode) &nbsp;&nbsp; [deserialize](#deserialize) &nbsp;&nbsp; [dump](#dump) &nbsp;&nbsp; [encode](#encode) &nbsp;&nbsp; [flatten\_dict](#flatten_dict) &nbsp;&nbsp; [load](#load) &nbsp;&nbsp; [parse](#parse) &nbsp;&nbsp; [read](#read) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [serialize](#serialize) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [write](#write) &nbsp;&nbsp; [write\_to\_file](#write_to_file)
 >
 > **Constants:** &nbsp; None
 
 # All Functions
-[create\_dict](#create_dict) &nbsp;&nbsp; [flatten\_dict](#flatten_dict) &nbsp;&nbsp; [parse](#parse) &nbsp;&nbsp; [read](#read) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [write](#write)
+[create\_dict](#create_dict) &nbsp;&nbsp; [decode](#decode) &nbsp;&nbsp; [deserialize](#deserialize) &nbsp;&nbsp; [dump](#dump) &nbsp;&nbsp; [encode](#encode) &nbsp;&nbsp; [flatten\_dict](#flatten_dict) &nbsp;&nbsp; [load](#load) &nbsp;&nbsp; [parse](#parse) &nbsp;&nbsp; [read](#read) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [serialize](#serialize) &nbsp;&nbsp; [split\_key\_value](#split_key_value) &nbsp;&nbsp; [write](#write) &nbsp;&nbsp; [write\_to\_file](#write_to_file)
 
 ## create\_dict
 Convert a section body into a Python dict
@@ -32,11 +32,75 @@ Convert a section body into a Python dict
 
 |Exception|Description|
 |---|---|
-|jesth.error.ConversionError|raised when an error occured while doing conversion|
+|jesth.errors.ConversionError|raised when an errors occured while doing conversion|
 
 
 
 **Return Value:** Returns a Python dict (type customizable with ValueConverter)
+
+[Back to Top](#module-overview)
+
+
+## decode
+No description
+
+
+
+**Signature:** (text, value\_converter=None)
+
+
+
+
+
+**Return Value:** None
+
+[Back to Top](#module-overview)
+
+
+## deserialize
+No description
+
+
+
+**Signature:** (raw, value\_converter=None)
+
+
+
+
+
+**Return Value:** None
+
+[Back to Top](#module-overview)
+
+
+## dump
+No description
+
+
+
+**Signature:** (data, destination, value\_converter=None)
+
+
+
+
+
+**Return Value:** None
+
+[Back to Top](#module-overview)
+
+
+## encode
+No description
+
+
+
+**Signature:** (data, value\_converter=None)
+
+
+
+
+
+**Return Value:** None
 
 [Back to Top](#module-overview)
 
@@ -58,6 +122,22 @@ Convert a Python dict into a list of strings (section body in the base form)
 
 
 **Return Value:** Returns a list of strings
+
+[Back to Top](#module-overview)
+
+
+## load
+Load data from a file or file object
+
+
+
+**Signature:** (source, value\_converter=None)
+
+
+
+
+
+**Return Value:** None
 
 [Back to Top](#module-overview)
 
@@ -128,6 +208,22 @@ thus creating a JesthFile
 [Back to Top](#module-overview)
 
 
+## serialize
+No description
+
+
+
+**Signature:** (data, value\_converter=None)
+
+
+
+
+
+**Return Value:** None
+
+[Back to Top](#module-overview)
+
+
 ## split\_key\_value
 Split a line (string) into key and value parts.
 The string must have a separator (defaults to "=").
@@ -148,7 +244,7 @@ The return will be: ("name": "John Doe")
 
 |Exception|Description|
 |---|---|
-|error.Error|if the separator, the key, or the value is missing,|
+|errors.Error|if the separator, the key, or the value is missing,|
 
 
 
@@ -174,6 +270,30 @@ Convert a jesth document into plain text then write it in a file
 
 
 **Return Value:** Returns the rendered plain text
+
+[Back to Top](#module-overview)
+
+
+## write\_to\_file
+Write to a file (TRY to do it atomically for GNU/Linux and MacOS)
+Check https://danluu.com/file-consistency/
+
+
+
+**Signature:** (data, dest)
+
+|Parameter|Description|
+|---|---|
+|data|str, data to write to file|
+|dest|a pathlib.Path instance, or a path string|
+|binary\_mode|boolean to tell if data should be written in dest with binary mode on (mode="wb")|
+|encoding|defaults to "utf-8" and automatically set to None when binary mode is True|
+
+
+
+
+
+**Return Value:** None
 
 [Back to Top](#module-overview)
 

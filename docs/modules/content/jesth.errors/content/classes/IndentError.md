@@ -2,21 +2,21 @@ Back to [All Modules](https://github.com/pyrustic/jesth/blob/master/docs/modules
 
 # Module Overview
 
-**jesth.error**
+**jesth.errors**
  
 Errors classes
 
-> **Classes:** &nbsp; [ConversionError](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.error/content/classes/ConversionError.md#class-conversionerror) &nbsp;&nbsp; [Error](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.error/content/classes/Error.md#class-error) &nbsp;&nbsp; [IndentError](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.error/content/classes/IndentError.md#class-indenterror)
+> **Classes:** &nbsp; [ConversionError](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.errors/content/classes/ConversionError.md#class-conversionerror) &nbsp;&nbsp; [Error](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.errors/content/classes/Error.md#class-error) &nbsp;&nbsp; [IndentError](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth.errors/content/classes/IndentError.md#class-indenterror)
 >
 > **Functions:** &nbsp; None
 >
 > **Constants:** &nbsp; None
 
 # Class IndentError
-Indent error while parsing a section body
+Indent errors while parsing a section body
 
 ## Base Classes
-jesth.error.Error
+jesth.errors.Error
 
 ## Class Attributes
 args (inherited from BaseException)

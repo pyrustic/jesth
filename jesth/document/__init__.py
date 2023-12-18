@@ -1,9 +1,10 @@
 """Document class for creating model for Jesth data or to interacting with a Jesthfile"""
 import pathlib
-from jesth import misc
+from jesth import misc, validator
 from jesth.section import Section
 from jesth.renderer import write, render
 from jesth.converter import ValueConverter
+from jesth.errors import Error
 
 
 class Document:
@@ -21,6 +22,7 @@ class Document:
         self._path = str(path.resolve()) if isinstance(path, pathlib.Path) else path
         sections = sections if sections else list()
         self._sections = list(sections) if not isinstance(sections, list) else sections
+        self._schema = None
         self._value_converter = value_converter if value_converter else ValueConverter()
         self._is_new = False
         self._model = None
@@ -42,6 +44,10 @@ class Document:
     def sections(self, val):
         self._sections = val
         self._create_model()
+
+    @property
+    def schema(self):
+        return self._schema
 
     @property
     def value_converter(self):
@@ -190,6 +196,34 @@ class Document:
         if header not in self._model:
             return 0
         return len(self._model[header])
+
+    def bind_schema(self):  # TODO
+        pass
+
+    def unbind_schema(self):  # TODO
+        pass
+
+    def validate(self, *headers):  # TODO
+        """
+        Validate this document
+        [parameters]
+        - *headers: headers to validate. If you ignore this parameter, the document will
+        be checked against the schema.
+        [return]
+        Return true if the document is valid. Raise an exception if the schema is missing
+        """
+        if self.schema is None:
+            msg = "Missing schema"
+            raise Error(msg)
+        if not isinstance(self.schema, dict):
+            msg = "The schema must be a dictionary whose keys represent the section headers"
+            raise Error(msg)
+        for key, val in self.schema.items():
+            validator.validate()
+
+
+
+        #validator.validate(self.)
 
     def remove(self, header, sub_index=-1):
         """

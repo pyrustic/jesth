@@ -57,7 +57,7 @@ Init a section
 
 ## create\_dict
 Try to build a dict object out of the body of this section.
-Raise an exception if an error occurs !
+Raise an exception if an errors occurs !
 Return `default` if the body has been created but is empty
 
 

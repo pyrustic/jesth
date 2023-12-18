@@ -8,7 +8,7 @@ For convenience, this module exposes main classes and functions of the library
 
 > **Classes:** &nbsp; [Document](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Document.md#class-document) &nbsp;&nbsp; [Parser](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Parser.md#class-parser) &nbsp;&nbsp; [Section](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/Section.md#class-section) &nbsp;&nbsp; [ValueConverter](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/classes/ValueConverter.md#class-valueconverter)
 >
-> **Functions:** &nbsp; [create\_dict](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#create_dict) &nbsp;&nbsp; [flatten\_dict](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#flatten_dict) &nbsp;&nbsp; [parse](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#parse) &nbsp;&nbsp; [read](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#read) &nbsp;&nbsp; [render](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#render) &nbsp;&nbsp; [split\_key\_value](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#split_key_value) &nbsp;&nbsp; [write](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#write)
+> **Functions:** &nbsp; [create\_dict](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#create_dict) &nbsp;&nbsp; [decode](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#decode) &nbsp;&nbsp; [deserialize](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#deserialize) &nbsp;&nbsp; [dump](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#dump) &nbsp;&nbsp; [encode](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#encode) &nbsp;&nbsp; [flatten\_dict](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#flatten_dict) &nbsp;&nbsp; [load](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#load) &nbsp;&nbsp; [parse](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#parse) &nbsp;&nbsp; [read](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#read) &nbsp;&nbsp; [render](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#render) &nbsp;&nbsp; [serialize](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#serialize) &nbsp;&nbsp; [split\_key\_value](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#split_key_value) &nbsp;&nbsp; [write](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#write) &nbsp;&nbsp; [write\_to\_file](https://github.com/pyrustic/jesth/blob/master/docs/modules/content/jesth/content/functions.md#write_to_file)
 >
 > **Constants:** &nbsp; None
 
@@ -27,6 +27,7 @@ No class attributes.
 |headers|getter|None||
 |path|getter|None||
 |path|setter|None||
+|schema|getter|None||
 |sections|getter|None||
 |sections|setter|None||
 |value_converter|getter|None||
@@ -34,7 +35,7 @@ No class attributes.
 
 
 # All Methods
-[\_\_init\_\_](#__init__) &nbsp;&nbsp; [append](#append) &nbsp;&nbsp; [count](#count) &nbsp;&nbsp; [get](#get) &nbsp;&nbsp; [get\_all](#get_all) &nbsp;&nbsp; [insert](#insert) &nbsp;&nbsp; [remove](#remove) &nbsp;&nbsp; [remove\_all](#remove_all) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [save](#save) &nbsp;&nbsp; [save\_to](#save_to) &nbsp;&nbsp; [set](#set) &nbsp;&nbsp; [\_create\_model](#_create_model) &nbsp;&nbsp; [\_find\_section\_to\_remove](#_find_section_to_remove) &nbsp;&nbsp; [\_insert](#_insert) &nbsp;&nbsp; [\_setup](#_setup) &nbsp;&nbsp; [\_update\_model](#_update_model)
+[\_\_init\_\_](#__init__) &nbsp;&nbsp; [append](#append) &nbsp;&nbsp; [bind\_schema](#bind_schema) &nbsp;&nbsp; [count](#count) &nbsp;&nbsp; [get](#get) &nbsp;&nbsp; [get\_all](#get_all) &nbsp;&nbsp; [insert](#insert) &nbsp;&nbsp; [remove](#remove) &nbsp;&nbsp; [remove\_all](#remove_all) &nbsp;&nbsp; [render](#render) &nbsp;&nbsp; [save](#save) &nbsp;&nbsp; [save\_to](#save_to) &nbsp;&nbsp; [set](#set) &nbsp;&nbsp; [unbind\_schema](#unbind_schema) &nbsp;&nbsp; [validate](#validate) &nbsp;&nbsp; [\_create\_model](#_create_model) &nbsp;&nbsp; [\_find\_section\_to\_remove](#_find_section_to_remove) &nbsp;&nbsp; [\_insert](#_insert) &nbsp;&nbsp; [\_setup](#_setup) &nbsp;&nbsp; [\_update\_model](#_update_model)
 
 ## \_\_init\_\_
 Init the document
@@ -69,6 +70,22 @@ Create a new section then append it to the end of this document
 |---|---|
 |header|the header (string) of the new section|
 |body|the body of this section as a string or a list of strings|
+
+
+
+
+
+**Return Value:** None
+
+[Back to Top](#module-overview)
+
+
+## bind\_schema
+No description
+
+
+
+**Signature:** (self)
 
 
 
@@ -282,6 +299,42 @@ Set a section at a specific index of the document
 
 
 **Return Value:** None
+
+[Back to Top](#module-overview)
+
+
+## unbind\_schema
+No description
+
+
+
+**Signature:** (self)
+
+
+
+
+
+**Return Value:** None
+
+[Back to Top](#module-overview)
+
+
+## validate
+Validate this document
+
+
+
+**Signature:** (self, \*headers)
+
+|Parameter|Description|
+|---|---|
+|\*headers|headers to validate. If you ignore this parameter, the document will be checked against the schema.|
+
+
+
+
+
+**Return Value:** Return true if the document is valid. Raise an exception if the schema is missing
 
 [Back to Top](#module-overview)
 

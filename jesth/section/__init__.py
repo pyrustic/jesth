@@ -1,5 +1,5 @@
 """Definition of the Section class"""
-from jesth import converter, error
+from jesth import converter, errors
 from jesth.converter import ValueConverter
 
 
@@ -71,7 +71,7 @@ class Section:
     def create_dict(self, default=None, *, strict=True):
         """
         Try to build a dict object out of the body of this section.
-        Raise an exception if an error occurs !
+        Raise an exception if an errors occurs !
         Return `default` if the body has been created but is empty
 
         [parameters]
@@ -114,4 +114,4 @@ def ensure_body(body, value_converter=None):
     if isinstance(body, list):
         body = [line.replace("\n", "\\n") for line in body]
         return body
-    raise error.ConversionError
+    raise errors.ConversionError

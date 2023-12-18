@@ -1,3 +1,9 @@
+> **Jesth has triggered the creation of two spin-offs to push its ideas further:**
+> - [Paradict](https://github.com/pyrustic/paradict): streamable multi-format serialization with schema.
+> - [Braq](https://github.com/pyrustic/braq): the most obvious way to section a document.
+> - 
+> These projects therefore make Jesth obsolete.
+
 <!-- Cover -->
 <div align="center">
     <img src="https://raw.githubusercontent.com/pyrustic/misc/master/assets/jesth/cover.png" alt="Demo" width="650">
@@ -9,7 +15,7 @@
 
 <!-- Intro Text -->
 # Jesth
-<b> Next-level human-readable data serialization format </b>
+<b> Human-readable versatile data format </b>
     
 This project is part of the [Pyrustic Open Ecosystem](https://pyrustic.github.io).
 > [Installation](#installation) &nbsp; &nbsp; [Demo](#demo) &nbsp; &nbsp; [Latest](https://github.com/pyrustic/jesth/tags) &nbsp; &nbsp; [Modules](https://github.com/pyrustic/jesth/tree/master/docs/modules#readme)
@@ -41,14 +47,14 @@ This project is part of the [Pyrustic Open Ecosystem](https://pyrustic.github.io
 - [Miscellaneous](#miscellaneous)
 - [Contributing](#contributing)
 - [Installation](#installation)
-    
+
 
 # Overview
-**Jesth** (pronounced [/dʒest/](https://dictionary.cambridge.org/pronunciation/english/jest)), which stands for **Just Extract Sections Then Hack'em**, is a human-readable data serialization format whose reference parser is an eponymous lightweight [Python](https://www.python.org/) library available on [PyPI](#installation).
+**Jesth** (pronounced [/dʒest/](https://dictionary.cambridge.org/pronunciation/english/jest)), which stands for **Just Extract Sections Then Hack'em**, is a human-readable data format whose reference parser is an eponymous lightweight [Python](https://www.python.org/) library available on [PyPI](#installation).
 
 > Read the **backstory** in this [HN discussion](https://news.ycombinator.com/item?id=35991018) !
 
-## Versatile serialization format
+## Versatile format
 A Jesth **document** is made up of **sections**, each defined by a **header** (between two square brackets) and a **body** which is just lines of text. 
 
 Instead of interpreting these lines upstream after extracting the sections, the Jesth parser lays low and lets the programmer decide which hack to apply to them.

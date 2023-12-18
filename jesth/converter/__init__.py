@@ -3,7 +3,7 @@ import datetime
 import base64
 from decimal import Decimal
 from collections import OrderedDict, namedtuple
-from jesth import error, misc, const
+from jesth import errors, misc, const
 from jesth.box import HexInt, OctInt, BinInt, RawString,\
     Text, RawText, CommentID, Comment, WhitespaceID, Whitespace
 
@@ -21,7 +21,7 @@ def create_dict(body, value_converter=None, strict=True):
     Returns a Python dict (type customizable with ValueConverter)
 
     [exceptions]
-    - jesth.error.ConversionError: raised when an error occured while doing conversion
+    - jesth.errors.ConversionError: raised when an errors occured while doing conversion
     """
     value_converter = value_converter if value_converter else ValueConverter()
     # base form (as a regular string)
@@ -68,7 +68,7 @@ class BaseToDict:
             else:
                 msg = "Expected {} or less indents at line '{}'"
                 msg = msg.format(context.indents, line)
-                raise error.IndentError(msg)
+                raise errors.IndentError(msg)
             # process line
             try:
                 BaseToDict._process_line(line, stack, value_converter,
@@ -161,7 +161,7 @@ class BaseToDict:
         else:
             msg = "Unknown box '{}'. Expected bin, dict, list, text, or raw."
             msg = msg.format(name)
-            raise error.Error(msg)
+            raise errors.Error(msg)
 
     @staticmethod
     def _check_container_tag(value):
@@ -305,7 +305,7 @@ class BaseToDict:
         else:
             msg = "Invalid parent name '{}'"
             msg = msg.format(parent_context.name)
-            raise error.Error(msg)
+            raise errors.Error(msg)
 
     @staticmethod
     def _add_whitespace_to_parent_context(parent_context, data, strict):
@@ -320,7 +320,7 @@ class BaseToDict:
         else:
             msg = "Invalid parent name '{}'"
             msg = msg.format(parent_context.name)
-            raise error.Error(msg)
+            raise errors.Error(msg)
 
 
 class DictToBase:
@@ -329,7 +329,7 @@ class DictToBase:
         value_converter = value_converter if value_converter else ValueConverter()
         if type(data) not in value_converter.dict_types:
             msg = "Expected: {}".format(", ".join(value_converter.dict_types))
-            raise error.Error(msg)
+            raise errors.Error(msg)
         return DictToBase._loop(data, value_converter)
 
     @staticmethod
@@ -401,7 +401,7 @@ class DictToBase:
                 base.append(line)
             # list box
             elif type(value) in value_converter.list_types:
-                misc.update_cached_refs(value, cached_refs)
+                #misc.update_cached_refs(value, cached_refs)
                 result = value_converter.encode(value)
                 line = "{} = {}".format(key, result)
                 base.append(context_indent_str + line)
@@ -411,7 +411,7 @@ class DictToBase:
                                  stack=stack)
             # dict box
             elif type(value) in value_converter.dict_types:
-                misc.update_cached_refs(value, cached_refs)
+                #misc.update_cached_refs(value, cached_refs)
                 result = value_converter.encode(value)
                 line = "{} = {}".format(key, result)
                 base.append(context_indent_str + line)
@@ -474,7 +474,7 @@ class DictToBase:
                 base.append(line)
             # list box
             elif type(value) in value_converter.list_types:
-                misc.update_cached_refs(value, cached_refs)
+                #misc.update_cached_refs(value, cached_refs)
                 result = value_converter.encode(value)
                 base.append(context_indent_str + result)
                 new_context = Context("list", value, context.indents + 1)
@@ -483,7 +483,7 @@ class DictToBase:
                                  stack=stack)
             # dict box
             elif type(value) in value_converter.dict_types:
-                misc.update_cached_refs(value, cached_refs)
+                #misc.update_cached_refs(value, cached_refs)
                 result = value_converter.encode(value)
                 base.append(context_indent_str + result)
                 new_context = Context("dict", value, context.indents + 1)
@@ -1043,7 +1043,7 @@ class ValueConverter:
                 continue
             else:
                 return result
-        raise error.ConversionError
+        raise errors.ConversionError
 
     def _encode_container(self, val):
         value_type = type(val)
@@ -1083,7 +1083,7 @@ class ValueConverter:
         if val == "(text)":
             return list()
         msg = "Expected one of these containers: (bin), (dict), (list), (raw), (text)"
-        raise error.Error(msg)
+        raise errors.Error(msg)
 
 
 # === Encoders ===
@@ -1211,7 +1211,7 @@ def decode_bool(val):
         return bool(1)
     elif val == "false":
         return bool(0)
-    raise error.ConversionError
+    raise errors.ConversionError
 
 
 def decode_complex(val):
@@ -1219,7 +1219,7 @@ def decode_complex(val):
         val = val.replace(" ", "")
         val = val.rstrip("i") + "j"
         return complex(val)
-    raise error.ConversionError
+    raise errors.ConversionError
 
 
 def decode_date(val):
@@ -1240,7 +1240,7 @@ def decode_float(val):
         return Decimal(val)
     if "." in val:
         return float(val)
-    raise error.ConversionError
+    raise errors.ConversionError
 
 
 def decode_integer(val):
@@ -1265,7 +1265,7 @@ def decode_null(val):
     val = val.lower()
     if val == "null":
         return None
-    raise error.ConversionError
+    raise errors.ConversionError
 
 
 def decode_raw(val):
@@ -1279,7 +1279,7 @@ def decode_string(val):
         return misc.decode_unicode(val[1:-1])
     if val.startswith("'") and val.endswith("'"):
         return RawString(val[1:-1])
-    raise error.ConversionError
+    raise errors.ConversionError
     #val = misc.replace_newlines(val)
     #val = misc.replace_tabs(val)
 
@@ -1296,4 +1296,4 @@ def decode_time(val):
 
 
 def decode_value(val):
-    raise error.ConversionError
+    raise errors.ConversionError
