@@ -1,7 +1,7 @@
 > **Jesth has triggered the creation of two spin-offs to push its ideas further:**
 > - [Paradict](https://github.com/pyrustic/paradict): streamable multi-format serialization with schema.
 > - [Braq](https://github.com/pyrustic/braq): the most obvious way to section a document.
-> - 
+>
 > These projects therefore make Jesth obsolete.
 
 <!-- Cover -->
