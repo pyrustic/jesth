@@ -1,8 +1,14 @@
-> **Jesth has triggered the creation of two spin-offs to push its ideas further:**
-> - [Braq](https://github.com/pyrustic/braq): Customizable data format for config files, AI prompts, and more.
-> - [Paradict](https://github.com/pyrustic/paradict): Streamable multi-format serialization with schema.
+⚠️⚠️
+
+> **Jesth has triggered the creation of four spin-offs to push its ideas further:**
+> - [KvF](https://github.com/pyrustic/kvf): Key-value file with sections (good for config files).
+> - [Braq](https://github.com/pyrustic/braq): Structured text format with sections (used by KvF).
+> - [Paradict](https://github.com/pyrustic/paradict): Streamable multi-format serialization (used by KvF).
+> - [Jinbase](https://github.com/pyrustic/jinbase): Multi-model transactional embedded database (using Paradict).
 >
-> These projects therefore make Jesth obsolete.
+> These projects make **Jesth** obsolete.
+
+⚠️⚠️
 
 <!-- Cover -->
 <div align="center">
